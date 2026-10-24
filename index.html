@@ -3,2919 +3,528 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ระบบเบิกจ่ายยาและเวชภัณฑ์ออนไลน์ รพ.สต.บ้านทับสอ อบจ.สกลนคร</title>
-  <style>
-    :root {
-      --bg: #f5faf8;
-      --panel: #ffffff;
-      --panel-soft: #eef8f7;
-      --ink: #17333a;
-      --muted: #60747a;
-      --line: #d7e7e4;
-      --primary: #0f766e;
-      --primary-dark: #0b5f59;
-      --blue: #0369a1;
-      --blue-soft: #e6f3fb;
-      --green-soft: #e8f7ef;
-      --amber: #b7791f;
-      --amber-soft: #fff7df;
-      --red: #c53030;
-      --red-soft: #fff0f0;
-      --violet: #6b46c1;
-      --cyan: #0891b2;
-      --gold: #c58b11;
-      --rose: #e11d48;
-      --deep: #06323a;
-      --surface: rgba(255, 255, 255, .86);
-      --shadow: 0 14px 42px rgba(23, 51, 58, .08);
-      --shadow-strong: 0 20px 55px rgba(24, 52, 62, .14);
-      --radius: 8px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      min-height: 100%;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      letter-spacing: 0;
-      overflow-x: hidden;
-    }
-
-    body {
-      min-height: 100%;
-      margin: 0;
-      background: var(--bg);
-      overflow-x: hidden;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    [hidden] {
-      display: none !important;
-    }
-
-    .login-screen {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      background:
-        linear-gradient(120deg, rgba(15, 118, 110, .12), transparent 34%),
-        linear-gradient(280deg, rgba(3, 105, 161, .12), transparent 38%),
-        var(--bg);
-    }
-
-    .login-card {
-      width: min(980px, 100%);
-      max-width: calc(100vw - 48px);
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, .8fr);
-      min-width: 0;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    .login-brand {
-      padding: 38px;
-      background: #073b3a;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 520px;
-      min-width: 0;
-    }
-
-    .login-brand h1 {
-      margin: 0 0 16px;
-      max-width: 600px;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.12;
-      letter-spacing: 0;
-      line-break: anywhere;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
-    .login-brand p {
-      margin: 0;
-      color: #d4eeea;
-      line-height: 1.75;
-      line-break: anywhere;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
-    .brand-mark {
-      width: 56px;
-      height: 56px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 26px;
-      border: 1px solid rgba(255, 255, 255, .28);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, .1);
-      font-size: 30px;
-      font-weight: 800;
-    }
-
-    .login-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .login-metric {
-      min-height: 82px;
-      padding: 14px;
-      border: 1px solid rgba(255, 255, 255, .18);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, .08);
-    }
-
-    .login-metric strong {
-      display: block;
-      font-size: 24px;
-      line-height: 1;
-    }
-
-    .login-metric span {
-      display: block;
-      margin-top: 8px;
-      color: #c8e9e4;
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .login-form-wrap {
-      padding: 34px;
-      align-self: center;
-      min-width: 0;
-    }
-
-    .section-title {
-      margin: 0 0 18px;
-      font-size: 22px;
-      line-height: 1.25;
-    }
-
-    .field {
-      display: grid;
-      gap: 7px;
-      margin-bottom: 14px;
-    }
-
-    .field label {
-      font-weight: 700;
-      color: #254b52;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid #bfd5d1;
-      border-radius: 7px;
-      background: #ffffff;
-      color: var(--ink);
-      min-height: 42px;
-      padding: 9px 11px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 84px;
-      resize: vertical;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(15, 118, 110, .13);
-    }
-
-    .hint {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .btn {
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border: 1px solid transparent;
-      border-radius: 7px;
-      padding: 9px 14px;
-      background: linear-gradient(135deg, #0f766e, #0891b2);
-      color: #ffffff;
-      font-weight: 800;
-      text-decoration: none;
-      white-space: nowrap;
-      box-shadow: 0 10px 22px rgba(15, 118, 110, .16);
-      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
-    }
-
-    .btn:hover {
-      background: linear-gradient(135deg, var(--primary-dark), #0369a1);
-      transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(15, 118, 110, .2);
-    }
-
-    .btn.secondary {
-      background: rgba(255, 255, 255, .92);
-      color: var(--primary);
-      border-color: #a7cbc5;
-      box-shadow: 0 8px 18px rgba(23, 51, 58, .06);
-    }
-
-    .btn.secondary:hover {
-      background: #eef8f7;
-    }
-
-    .btn.blue {
-      background: linear-gradient(135deg, #0369a1, #7c3aed);
-    }
-
-    .btn.blue:hover {
-      background: linear-gradient(135deg, #075985, #6d28d9);
-    }
-
-    .btn.warn {
-      background: linear-gradient(135deg, #b7791f, #c58b11);
-    }
-
-    .btn.warn:hover {
-      background: #955f17;
-    }
-
-    .btn.danger {
-      background: linear-gradient(135deg, #c53030, #e11d48);
-    }
-
-    .btn.danger:hover {
-      background: #9f2525;
-    }
-
-    .btn.ghost {
-      color: var(--ink);
-      background: transparent;
-      border-color: var(--line);
-    }
-
-    .btn.ghost:hover {
-      background: #f1f7f5;
-    }
-
-    .btn.icon-only {
-      width: 42px;
-      padding: 0;
-    }
-
-    .btn:disabled {
-      opacity: .58;
-      cursor: not-allowed;
-    }
-
-    .login-button {
-      width: 100%;
-      margin-top: 8px;
-    }
-
-    .quick-users {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .quick-users button {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #f9fcfb;
-      color: var(--ink);
-      font-weight: 700;
-      text-align: center;
-    }
-
-    .quick-users button:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .app-shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 270px minmax(0, 1fr);
-      background:
-        linear-gradient(135deg, rgba(232, 247, 239, .9), rgba(230, 243, 251, .72) 42%, rgba(255, 247, 223, .58)),
-        #f6fbf9;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: auto;
-      padding: 18px;
-      color: #e9fffb;
-      background:
-        linear-gradient(155deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, 0) 35%),
-        linear-gradient(180deg, #06323a 0%, #074946 54%, #072f38 100%);
-      border-right: 1px solid rgba(255, 255, 255, .18);
-      box-shadow: 14px 0 36px rgba(6, 50, 58, .16);
-    }
-
-    .app-logo {
-      display: grid;
-      grid-template-columns: 42px 1fr;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 22px;
-    }
-
-    .app-logo-mark {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(255, 255, 255, .34);
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(255, 255, 255, .24), rgba(255, 255, 255, .08));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 10px 28px rgba(0, 0, 0, .18);
-      font-weight: 900;
-      font-size: 22px;
-    }
-
-    .app-logo strong {
-      display: block;
-      font-size: 15px;
-      line-height: 1.35;
-      color: #ffffff;
-    }
-
-    .app-logo span {
-      color: #b7d9d5;
-      font-size: 12px;
-    }
-
-    .nav-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .nav-btn {
-      width: 100%;
-      min-height: 42px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid transparent;
-      border-radius: 7px;
-      padding: 9px 11px;
-      color: #daf2ee;
-      background: rgba(255, 255, 255, .04);
-      font-weight: 800;
-      text-align: left;
-      transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
-    }
-
-    .nav-btn:hover,
-    .nav-btn.active {
-      background: rgba(255, 255, 255, .16);
-      border-color: rgba(255, 255, 255, .22);
-      color: #ffffff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
-      transform: translateX(2px);
-    }
-
-    .nav-btn.active {
-      background: linear-gradient(135deg, rgba(20, 184, 166, .34), rgba(3, 105, 161, .24));
-      border-color: rgba(255, 255, 255, .3);
-    }
-
-    .nav-icon {
-      width: 24px;
-      height: 24px;
-      display: grid;
-      place-items: center;
-      border-radius: 7px;
-      background: rgba(255, 255, 255, .16);
-      border: 1px solid rgba(255, 255, 255, .16);
-      font-size: 13px;
-      flex: 0 0 24px;
-    }
-
-    .sidebar-footer {
-      margin-top: 22px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, .14);
-      color: #baded9;
-      font-size: 13px;
-      line-height: 1.55;
-      background: rgba(255, 255, 255, .06);
-      border-radius: var(--radius);
-      padding: 14px;
-    }
-
-    .main-area {
-      min-width: 0;
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 4;
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 14px 22px;
-      border-bottom: 1px solid rgba(215, 231, 228, .78);
-      background: rgba(255, 255, 255, .82);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 28px rgba(23, 51, 58, .06);
-    }
-
-    .mobile-menu-btn {
-      display: none;
-    }
-
-    .page-kicker {
-      display: block;
-      color: var(--primary);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .page-title {
-      margin: 1px 0 0;
-      font-size: 24px;
-      line-height: 1.25;
-      color: #0c2f37;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .user-pill,
-    .connection-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 36px;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .9);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: 0 8px 20px rgba(23, 51, 58, .05);
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #95a9a5;
-      flex: 0 0 9px;
-    }
-
-    .dot.online {
-      background: #16a34a;
-    }
-
-    .content {
-      padding: 22px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 260px);
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .toolbar-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .grid.two {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .grid.three {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .grid.four {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(150px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .dashboard-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
-      gap: 18px;
-      align-items: stretch;
-      margin-bottom: 16px;
-      padding: 22px;
-      border-radius: 10px;
-      color: #ffffff;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 42%),
-        linear-gradient(125deg, #07565b 0%, #0f766e 46%, #0b6b8f 100%);
-      box-shadow: var(--shadow-strong);
-      overflow: hidden;
-    }
-
-    .dashboard-hero h2 {
-      margin: 0;
-      max-width: 760px;
-      font-size: clamp(26px, 3vw, 36px);
-      line-height: 1.18;
-      letter-spacing: 0;
-    }
-
-    .dashboard-hero p {
-      max-width: 780px;
-      margin: 10px 0 0;
-      color: rgba(255, 255, 255, .86);
-      line-height: 1.65;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .hero-actions .btn {
-      background: rgba(255, 255, 255, .94);
-      color: #07565b;
-      border-color: rgba(255, 255, 255, .42);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
-    }
-
-    .hero-actions .btn.secondary {
-      background: rgba(255, 255, 255, .12);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, .32);
-    }
-
-    .hero-status {
-      display: grid;
-      align-content: space-between;
-      gap: 12px;
-      padding: 16px;
-      border: 1px solid rgba(255, 255, 255, .22);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, .12);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2);
-    }
-
-    .hero-status strong {
-      display: block;
-      font-size: 30px;
-      line-height: 1;
-    }
-
-    .hero-status span {
-      color: rgba(255, 255, 255, .8);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .status-chip-row,
-    .quick-action-grid {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .status-chip {
-      min-height: 34px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 11px;
-      border: 1px solid rgba(255, 255, 255, .28);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .12);
-      color: #ffffff;
-      font-weight: 900;
-      font-size: 13px;
-    }
-
-    .quick-action-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(150px, 1fr));
-      margin-bottom: 16px;
-    }
-
-    .quick-action {
-      min-height: 82px;
-      display: grid;
-      align-content: center;
-      gap: 6px;
-      border: 1px solid rgba(215, 231, 228, .9);
-      border-radius: var(--radius);
-      padding: 14px;
-      background: rgba(255, 255, 255, .86);
-      color: var(--ink);
-      text-align: left;
-      box-shadow: 0 12px 30px rgba(23, 51, 58, .06);
-      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
-    }
-
-    .quick-action:hover {
-      transform: translateY(-2px);
-      border-color: rgba(15, 118, 110, .34);
-      box-shadow: var(--shadow-strong);
-    }
-
-    .quick-action strong {
-      color: #123a42;
-      font-size: 15px;
-    }
-
-    .quick-action span {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .metric-card,
-    .panel,
-    .table-panel,
-    .alert-box {
-      border: 1px solid rgba(215, 231, 228, .88);
-      border-radius: var(--radius);
-      background: var(--surface);
-      box-shadow: 0 12px 34px rgba(23, 51, 58, .07);
-    }
-
-    .metric-card {
-      min-height: 112px;
-      padding: 16px;
-      display: grid;
-      align-content: space-between;
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .metric-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 5px;
-      background: var(--metric-accent, var(--primary));
-      z-index: -1;
-    }
-
-    .metric-card::after {
-      content: "";
-      position: absolute;
-      top: -44px;
-      right: -34px;
-      width: 116px;
-      height: 116px;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--metric-accent, var(--primary)) 18%, transparent);
-      z-index: -1;
-    }
-
-    .metric-card.accent-teal { --metric-accent: #0f766e; }
-    .metric-card.accent-sky { --metric-accent: #0369a1; }
-    .metric-card.accent-emerald { --metric-accent: #16a34a; }
-    .metric-card.accent-amber { --metric-accent: #c58b11; }
-    .metric-card.accent-rose { --metric-accent: #e11d48; }
-    .metric-card.accent-violet { --metric-accent: #7c3aed; }
-
-    .metric-card span {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-      line-height: 1.35;
-    }
-
-    .metric-card strong {
-      display: block;
-      margin-top: 8px;
-      font-size: 30px;
-      line-height: 1;
-      color: #102f36;
-    }
-
-    .metric-card small {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-    }
-
-    .panel {
-      padding: 18px;
-      backdrop-filter: blur(8px);
-    }
-
-    .panel h2,
-    .table-panel h2 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      line-height: 1.35;
-      color: #123a42;
-    }
-
-    .panel-subtitle {
-      margin: -6px 0 12px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .table-panel {
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-    }
-
-    .table-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(135deg, rgba(232, 247, 239, .8), rgba(230, 243, 251, .68));
-      flex-wrap: wrap;
-    }
-
-    .table-header h2 {
-      margin: 0;
-    }
-
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 860px;
-      border-collapse: collapse;
-      background: #ffffff;
-    }
-
-    th,
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #e7efed;
-      text-align: left;
-      vertical-align: top;
-      line-height: 1.45;
-    }
-
-    th {
-      color: #355c63;
-      background: linear-gradient(180deg, #f5fbfa, #eef8f7);
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    tr:hover td {
-      background: #fbfefd;
-    }
-
-    .cell-actions {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .mini-btn {
-      min-height: 32px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #ffffff;
-      color: var(--ink);
-      padding: 5px 9px;
-      font-weight: 800;
-    }
-
-    .mini-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: #f2fbf9;
-    }
-
-    .mini-btn.danger {
-      color: var(--red);
-      border-color: #f0bbbb;
-    }
-
-    .mini-btn.warn {
-      color: var(--amber);
-      border-color: #edd39a;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-size: 12px;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .badge.pending {
-      background: var(--amber-soft);
-      color: var(--amber);
-      border-color: #eed99e;
-    }
-
-    .badge.approved,
-    .badge.waiting {
-      background: var(--blue-soft);
-      color: var(--blue);
-      border-color: #afd5ee;
-    }
-
-    .badge.paid {
-      background: var(--green-soft);
-      color: #16864f;
-      border-color: #a4dfc1;
-    }
-
-    .badge.rejected,
-    .badge.cancelled,
-    .badge.low {
-      background: var(--red-soft);
-      color: var(--red);
-      border-color: #f0bbbb;
-    }
-
-    .badge.draft {
-      background: #eef1f3;
-      color: #52666c;
-      border-color: #d9e0e3;
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .request-lines {
-      display: grid;
-      gap: 10px;
-      margin: 10px 0 14px;
-    }
-
-    .request-line {
-      display: grid;
-      grid-template-columns: minmax(220px, 1.4fr) minmax(110px, .45fr) minmax(110px, .45fr) 42px;
-      gap: 8px;
-      align-items: end;
-      padding: 10px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fbfefd;
-    }
-
-    .line-stock {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .alert-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-
-    .alert-box {
-      padding: 14px;
-    }
-
-    .alert-list {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .alert-list li {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 10px;
-      border-radius: 7px;
-      background: #f8fbfa;
-      line-height: 1.4;
-    }
-
-    .chart {
-      min-height: 260px;
-      display: flex;
-      align-items: end;
-      gap: 10px;
-      padding: 14px 4px 0;
-      border-top: 1px solid #edf3f2;
-    }
-
-    .bar {
-      min-width: 46px;
-      flex: 1;
-      display: grid;
-      align-items: end;
-      gap: 8px;
-      text-align: center;
-    }
-
-    .bar-fill {
-      width: 100%;
-      min-height: 8px;
-      border-radius: 6px 6px 2px 2px;
-      background: var(--primary);
-    }
-
-    .bar span {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .rank-list {
-      display: grid;
-      gap: 11px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .rank-row {
-      display: grid;
-      grid-template-columns: minmax(140px, 1fr) minmax(120px, .9fr) 52px;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .rank-track {
-      height: 10px;
-      border-radius: 999px;
-      background: #e7f0ee;
-      overflow: hidden;
-    }
-
-    .rank-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: var(--blue);
-    }
-
-    .empty {
-      padding: 30px 16px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.7;
-    }
-
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 20;
-      width: min(420px, calc(100vw - 36px));
-      display: grid;
-      gap: 8px;
-    }
-
-    .toast-item {
-      border: 1px solid var(--line);
-      border-left: 5px solid var(--primary);
-      border-radius: var(--radius);
-      background: #ffffff;
-      padding: 12px 13px;
-      box-shadow: var(--shadow);
-      line-height: 1.5;
-      font-weight: 700;
-    }
-
-    .toast-item.error {
-      border-left-color: var(--red);
-    }
-
-    .toast-item.warn {
-      border-left-color: var(--amber);
-    }
-
-    .split-summary {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 14px;
-    }
-
-    .receipt {
-      width: min(860px, 100%);
-      margin: 0 auto;
-      padding: 28px;
-      color: #111827;
-      background: #ffffff;
-    }
-
-    .receipt h1 {
-      margin: 0 0 6px;
-      text-align: center;
-      font-size: 22px;
-    }
-
-    .receipt .meta {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px 18px;
-      margin: 18px 0;
-    }
-
-    .receipt table {
-      min-width: 0;
-      border: 1px solid #b9c7c4;
-    }
-
-    .receipt th,
-    .receipt td {
-      border: 1px solid #b9c7c4;
-    }
-
-    .signature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 44px;
-      text-align: center;
-    }
-
-    .signature-line {
-      border-top: 1px solid #111827;
-      padding-top: 8px;
-    }
-
-    #printArea {
-      display: none;
-    }
-
-    @media print {
-      body * {
-        visibility: hidden !important;
-      }
-
-      #printArea,
-      #printArea * {
-        visibility: visible !important;
-      }
-
-      #printArea {
-        display: block !important;
-        position: absolute;
-        inset: 0;
-        background: #ffffff;
-      }
-    }
-
-    @media (max-width: 1180px) {
-      .metric-grid {
-        grid-template-columns: repeat(3, minmax(150px, 1fr));
-      }
-
-      .grid.four {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .quick-action-grid {
-        grid-template-columns: repeat(2, minmax(150px, 1fr));
-      }
-
-      .filters {
-        grid-template-columns: repeat(3, minmax(150px, 1fr));
-      }
-    }
-
-    @media (max-width: 900px) {
-      .login-card {
-        grid-template-columns: 1fr;
-      }
-
-      .login-brand {
-        min-height: auto;
-      }
-
-      .app-shell {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: fixed;
-        inset: 0 auto 0 0;
-        z-index: 10;
-        width: min(300px, 86vw);
-        transform: translateX(-105%);
-        transition: transform .18s ease;
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .mobile-menu-btn {
-        display: inline-flex;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .content {
-        padding: 16px;
-      }
-
-      .grid.two,
-      .grid.three,
-      .split-summary,
-      .dashboard-hero,
-      .alert-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .request-line {
-        grid-template-columns: 1fr 1fr 1fr 42px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .login-screen {
-        display: block;
-        padding: 12px;
-      }
-
-      .login-brand,
-      .login-form-wrap {
-        padding: 22px;
-      }
-
-      .login-brand h1 {
-        font-size: 24px;
-      }
-
-      .login-card {
-        width: calc(100% - 48px);
-        max-width: calc(100vw - 48px);
-        margin: 0 auto;
-      }
-
-      .login-brand h1,
-      .login-brand p {
-        max-width: 100%;
-        word-break: break-all;
-      }
-
-      .login-metrics,
-      .quick-users,
-      .metric-grid,
-      .quick-action-grid,
-      .grid.four,
-      .filters {
-        grid-template-columns: 1fr;
-      }
-
-      .dashboard-hero {
-        padding: 18px;
-      }
-
-      .dashboard-hero h2 {
-        font-size: 24px;
-        word-break: break-word;
-      }
-
-      .topbar {
-        display: grid;
-        grid-template-columns: 1fr;
-        padding: 12px;
-      }
-
-      .topbar-actions {
-        justify-content: flex-start;
-      }
-
-      .toolbar {
-        display: grid;
-      }
-
-      .toolbar-actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .toolbar-actions .btn {
-        width: 100%;
-      }
-
-      .request-line {
-        grid-template-columns: 1fr;
-      }
-
-      .btn.icon-only {
-        width: 100%;
-      }
-
-      .rank-row {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  <title>แดชบอร์ดอัจฉริยะ รพ.สต.บ้านทับสอ | JHCIS</title>
+  <link rel="stylesheet" href="/assets/styles.css">
 </head>
-<body>
-  <section id="loginView" class="login-screen">
-    <div class="login-card">
-      <div class="login-brand">
+<body class="overview-mode guest">
+  <div class="dashboard-shell">
+    <aside class="side-rail">
+      <div class="brand">
+        <div class="brand-mark">H+</div>
         <div>
-          <div class="brand-mark">ยา</div>
-          <h1>ระบบเบิกจ่ายยาและเวชภัณฑ์ออนไลน์ รพ.สต.บ้านทับสอ อบจ.สกลนคร</h1>
-          <p>จัดการคำขอเบิก อนุมัติ จ่ายยา ตัดสต็อก และดูรายงานคงคลังในหน้าจอเดียว รองรับมือถือสำหรับงานประจำวันของเจ้าหน้าที่</p>
-        </div>
-        <div class="login-metrics">
-          <div class="login-metric"><strong id="loginStockCount">0</strong><span>รายการคลังเริ่มต้น</span></div>
-          <div class="login-metric"><strong>5</strong><span>กลุ่มสิทธิ์ใช้งาน</span></div>
-          <div class="login-metric"><strong>24/7</strong><span>เปิดไฟล์ใช้งานได้ทันที</span></div>
+          <strong>แดชบอร์ดอัจฉริยะ รพ.สต.บ้านทับสอ</strong>
+          <span>JHCIS · โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทับสอ</span>
         </div>
       </div>
-      <div class="login-form-wrap">
-        <h2 class="section-title">เข้าสู่ระบบ</h2>
-        <form id="loginForm">
-          <div class="field">
-            <label for="loginUsername">ชื่อผู้ใช้</label>
-            <input id="loginUsername" name="username" list="loginUsers" autocomplete="username" required>
-            <datalist id="loginUsers"></datalist>
-          </div>
-          <div class="field">
-            <label for="loginPassword">รหัสผ่าน</label>
-            <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
-          </div>
-          <button class="btn login-button" type="submit">เข้าสู่ระบบ</button>
-        </form>
-        <div class="quick-users" id="quickUsers"></div>
+      <div class="auth-panel">
+        <span id="authStatus">กำลังตรวจสิทธิ์</span>
+        <button id="authButton" class="auth-button" type="button">เข้าสู่ระบบ</button>
       </div>
-    </div>
-  </section>
-
-  <section id="appView" class="app-shell" hidden>
-    <aside id="sidebar" class="sidebar">
-      <div class="app-logo">
-        <div class="app-logo-mark">ยา</div>
-        <div>
-          <strong>รพ.สต.บ้านทับสอ</strong>
-          <span>คลังยาและเวชภัณฑ์</span>
+      <nav class="nav" aria-label="เมนูหลัก">
+        <div class="nav-group">
+          <p class="nav-heading">ศูนย์บัญชาการ</p>
+          <button class="nav-btn active" data-target="overview"><span class="nav-icon" aria-hidden="true">⌂</span>ภาพรวม</button>
+          <button class="nav-btn" data-target="ai"><span class="nav-icon" aria-hidden="true">✦</span>AI ผู้บริหาร</button>
         </div>
-      </div>
-      <nav id="navList" class="nav-list"></nav>
-      <div class="sidebar-footer">
-        <div id="sidebarUser"></div>
-        <div id="sidebarRole"></div>
-      </div>
+        <div class="nav-group">
+          <p class="nav-heading">บริการและประชากร</p>
+          <button class="nav-btn" data-target="services"><span class="nav-icon" aria-hidden="true">▦</span>บริการรายวัน</button>
+          <button class="nav-btn" data-target="appointments"><span class="nav-icon" aria-hidden="true">◷</span>นัดหมายและติดตาม</button>
+          <button class="nav-btn" data-target="labs"><span class="nav-icon" aria-hidden="true">⌕</span>แล็บและผลตรวจ</button>
+          <button class="nav-btn" data-target="population"><span class="nav-icon" aria-hidden="true">◉</span>ประชากร</button>
+          <button class="nav-btn" data-target="drugs"><span class="nav-icon" aria-hidden="true">✚</span>คลังยาและเวชภัณฑ์</button>
+          <button class="nav-btn" data-target="dental"><span class="nav-icon" aria-hidden="true">✳</span>ทันตกรรม</button>
+          <button class="nav-btn" data-target="thai-med"><span class="nav-icon" aria-hidden="true">✚</span>แพทย์แผนไทย</button>
+          <button class="nav-btn" data-target="epi"><span class="nav-icon" aria-hidden="true">⊕</span>EPI</button>
+          <button class="nav-btn" data-target="development"><span class="nav-icon" aria-hidden="true">◇</span>พัฒนาการเด็ก</button>
+        </div>
+        <div class="nav-group">
+          <p class="nav-heading">ติดตามและเบิกจ่าย</p>
+          <button class="nav-btn" data-target="rights"><span class="nav-icon" aria-hidden="true">✓</span>ตรวจสอบสิทธิ์</button>
+          <button class="nav-btn" data-target="screenings"><span class="nav-icon" aria-hidden="true">◎</span>คัดกรอง</button>
+          <button class="nav-btn" data-target="quality"><span class="nav-icon" aria-hidden="true">!</span>ข้อมูลไม่สมบูรณ์</button>
+          <button class="nav-btn" data-target="finance"><span class="nav-icon" aria-hidden="true">฿</span>ส่งเคลม สปสช.</button>
+        </div>
+        <div class="nav-group">
+          <p class="nav-heading">ระบบ</p>
+          <button class="nav-btn" data-target="connection"><span class="nav-icon" aria-hidden="true">⚙</span>ฐานข้อมูล</button>
+        </div>
+      </nav>
     </aside>
 
-    <main class="main-area">
+    <main class="main-stage">
       <header class="topbar">
         <div>
-          <button id="mobileMenuBtn" class="btn ghost mobile-menu-btn" type="button">เมนู</button>
-          <span id="pageKicker" class="page-kicker">Dashboard</span>
-          <h1 id="pageTitle" class="page-title">ภาพรวมระบบ</h1>
+          <p class="eyebrow">JHCIS · โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทับสอ</p>
+          <h1>ศูนย์บัญชาการบริการปฐมภูมิ</h1>
         </div>
-        <div class="topbar-actions">
-          <span id="connectionPill" class="connection-pill"><span class="dot"></span><span>Standalone</span></span>
-          <span id="userPill" class="user-pill"></span>
-          <button id="refreshBtn" class="btn secondary" type="button">รีเฟรช</button>
-          <button id="logoutBtn" class="btn ghost" type="button">ออกจากระบบ</button>
+        <div class="top-actions">
+          <div id="liveBadge" class="status-badge waiting">กำลังตรวจสถานะ</div>
+          <button class="icon-btn" id="refreshBtn" title="รีเฟรช">↻</button>
         </div>
       </header>
-      <div id="content" class="content"></div>
-    </main>
-  </section>
 
-  <div id="toast" class="toast" aria-live="polite"></div>
-  <input id="hospitalImportInput" type="file" accept=".pdf,.exe,.csv,.txt,.xls,.xlsx" multiple hidden>
-  <div id="printArea"></div>
+      <section id="overview" class="section overview-hero active-section">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Executive Overview · ภาพรวมผู้บริหาร</p>
+            <h2>ภาพรวมวันนี้</h2>
+            <p id="lastUpdated">กำลังโหลดข้อมูล...</p>
+          </div>
+          <div id="kpiGrid" class="kpi-grid"></div>
+        </div>
+        <div class="overview-signal">
+          <div>
+            <span class="soft-label dark">บริการรายวัน</span>
+            <strong>แนวโน้มผู้มารับบริการ</strong>
+          </div>
+          <canvas id="overviewCanvas" width="860" height="170"></canvas>
+        </div>
+        <div id="moduleGrid" class="module-groups"></div>
+      </section>
 
-  <script>
-    (function () {
-      "use strict";
+      <section id="services" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Daily Services</p>
+            <h2>ผู้มารับบริการ</h2>
+          </div>
+          <div class="date-filter" data-kind="services">
+            <input type="date" name="start">
+            <input type="date" name="end">
+            <button class="secondary-btn run-report">แสดงรายงาน</button>
+          </div>
+        </div>
+        <div class="insight-layout">
+          <div class="panel chart-panel">
+            <canvas id="visitCanvas" width="1100" height="340"></canvas>
+          </div>
+          <div id="visitStats" class="metric-stack"></div>
+        </div>
+        <div class="surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้รับบริการตามช่วงวันที่</h3>
+            <span id="serviceCount" class="soft-label">-</span>
+          </div>
+          <div id="serviceTable"></div>
+        </div>
+      </section>
 
-      const LOCAL_KEY = "medreq.state.v1";
-      const GAS_URL_KEY = "medreq.gasUrl";
-      const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbwn7-PpE86012uPb4mjg2Ok6ER9Yl5hUrxwlq99FUJVU1IaVEyu0YXNPZp6qYSbB6ho/exec";
-      const MAX_IMPORT_FILE_BYTES = 8 * 1024 * 1024;
-      const IMPORT_EXTENSIONS = [".pdf", ".exe", ".csv", ".txt", ".xls", ".xlsx"];
-      const todayIso = () => new Date().toISOString().slice(0, 10);
-      const nowText = () => new Date().toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" });
+      <section id="appointments" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Follow Up</p><h2>นัดหมายและติดตาม</h2></div>
+          <div class="date-filter" data-kind="appointments"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="appointmentGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head"><h3>รายชื่อนัดหมายจาก JHCIS</h3><span id="appointmentCount" class="soft-label">-</span></div>
+          <div id="appointmentTable"></div>
+        </div>
+      </section>
 
-      const tabs = [
-        { id: "dashboard", label: "Dashboard", title: "ภาพรวมระบบ", icon: "D", roles: ["staff", "pharmacy", "approver", "admin", "executive"] },
-        { id: "request", label: "ขอเบิก", title: "ขอเบิกยา/เวชภัณฑ์", icon: "+", roles: ["staff", "pharmacy", "admin"] },
-        { id: "requests", label: "คำขอเบิก", title: "รายการคำขอเบิก", icon: "L", roles: ["staff", "pharmacy", "approver", "admin", "executive"] },
-        { id: "approve", label: "อนุมัติ", title: "อนุมัติคำขอ", icon: "A", roles: ["approver", "admin"] },
-        { id: "dispense", label: "จ่ายยา", title: "จ่ายยาและตัดสต็อก", icon: "S", roles: ["pharmacy", "admin"] },
-        { id: "inventory", label: "คลังยา", title: "คลังยาและเวชภัณฑ์", icon: "I", roles: ["pharmacy", "admin", "approver", "executive"] },
-        { id: "reports", label: "รายงาน", title: "รายงาน", icon: "R", roles: ["pharmacy", "admin", "approver", "executive"] },
-        { id: "settings", label: "ตั้งค่า", title: "ตั้งค่าผู้ใช้งาน", icon: "U", roles: ["admin"] }
-      ];
+      <section id="labs" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Laboratory</p><h2>แล็บและผลตรวจ</h2></div>
+          <div class="date-filter" data-kind="labs"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="labGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head"><h3>รายการตรวจแล็บตามวันที่บันทึก</h3><span id="labCount" class="soft-label">-</span></div>
+          <div id="labTable"></div>
+        </div>
+      </section>
 
-      const roleNames = {
-        staff: "เจ้าหน้าที่ รพ.สต.",
-        pharmacy: "เจ้าหน้าที่คลังยา",
-        approver: "ผู้อนุมัติ",
-        admin: "ผู้ดูแลระบบ",
-        executive: "ผู้บริหาร"
-      };
+      <section id="population" class="section">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Population</p>
+            <h2>ข้อมูลประชากร</h2>
+          </div>
+        </div>
+        <div class="insight-layout">
+          <div class="panel chart-panel">
+            <canvas id="populationCanvas" width="720" height="320"></canvas>
+          </div>
+          <div id="populationStats" class="metric-stack"></div>
+        </div>
+        <div class="insight-layout report-surface">
+          <div class="panel chart-panel">
+            <div class="surface-head">
+              <h3>พีระมิดประชากร</h3>
+              <span class="soft-label">ชาย / หญิง ตามช่วงอายุ</span>
+            </div>
+            <canvas id="populationPyramidCanvas" width="900" height="460"></canvas>
+          </div>
+          <div class="panel chart-panel">
+            <div class="surface-head">
+              <h3>แยกตามเพศ</h3>
+              <span id="populationSexCount" class="soft-label">-</span>
+            </div>
+            <canvas id="populationSexCanvas" width="460" height="320"></canvas>
+          </div>
+        </div>
+        <div class="insight-layout report-surface">
+          <div class="surface">
+            <div class="surface-head">
+              <h3>ประชากรตามกลุ่มอายุ</h3>
+              <span id="populationAgeCount" class="soft-label">-</span>
+            </div>
+            <div id="populationAgeTable"></div>
+          </div>
+          <div class="surface">
+            <div class="surface-head">
+              <h3>ประชากรตามหมู่บ้าน</h3>
+              <span id="populationVillageCount" class="soft-label">-</span>
+            </div>
+            <div id="populationVillageTable"></div>
+          </div>
+        </div>
+      </section>
 
-      let state = loadLocalState();
-      let session = null;
-      let activeTab = "dashboard";
-      let currentReportRows = [];
-      let filterState = { search: "", status: "", from: "", to: "", department: "" };
+      <section id="drugs" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Pharmacy</p><h2>คลังยาและเวชภัณฑ์</h2></div>
+          <div class="date-filter" data-kind="drugs"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="drugGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head"><h3>ยอดคงเหลือตาม JHCIS</h3><span id="drugStockCount" class="soft-label">-</span></div>
+          <div id="drugStockTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head"><h3>ล็อตรับเข้าที่ใกล้หมดอายุ</h3><span id="drugExpireCount" class="soft-label">ไม่ยืนยันยอดคงเหลือรายล็อต</span></div>
+          <div id="drugExpireTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head"><h3>การใช้ยาตามช่วงวันที่</h3><span id="drugUsageCount" class="soft-label">-</span></div>
+          <div id="drugUsageTable"></div>
+        </div>
+      </section>
 
-      const $ = (selector, root = document) => root.querySelector(selector);
-      const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
-      function seedState() {
-        return {
-          users: [
-            { username: "staff", password: "1234", name: "เจ้าหน้าที่ รพ.สต.", role: "staff", department: "งานรักษาพยาบาล", active: true },
-            { username: "pharmacy", password: "1234", name: "เจ้าหน้าที่คลังยา", role: "pharmacy", department: "คลังยา", active: true },
-            { username: "approver", password: "1234", name: "ผอ.รพ.สต.", role: "approver", department: "บริหาร", active: true },
-            { username: "admin", password: "1234", name: "ผู้ดูแลระบบ", role: "admin", department: "เทคโนโลยีสารสนเทศ", active: true },
-            { username: "executive", password: "1234", name: "ผู้บริหาร", role: "executive", department: "บริหาร", active: true }
-          ],
-          inventory: [
-            { itemId: "MED001", name: "Paracetamol 500 mg", category: "ยา", unit: "เม็ด", stock: 1250, minStock: 300, expiryDate: "2027-02-15", lotNumber: "PCT-2601", unitPrice: 0.45 },
-            { itemId: "MED002", name: "Amoxicillin 500 mg", category: "ยา", unit: "แคปซูล", stock: 420, minStock: 200, expiryDate: "2027-04-20", lotNumber: "AMX-2602", unitPrice: 1.8 },
-            { itemId: "MED003", name: "ORS", category: "ยา", unit: "ซอง", stock: 88, minStock: 120, expiryDate: "2026-12-10", lotNumber: "ORS-2601", unitPrice: 2.4 },
-            { itemId: "SUP001", name: "หน้ากากอนามัย", category: "เวชภัณฑ์", unit: "ชิ้น", stock: 860, minStock: 500, expiryDate: "2029-01-01", lotNumber: "MSK-2603", unitPrice: 1.1 },
-            { itemId: "SUP002", name: "ถุงมือ Disposable", category: "เวชภัณฑ์", unit: "คู่", stock: 240, minStock: 300, expiryDate: "2028-08-30", lotNumber: "GLV-2602", unitPrice: 1.6 },
-            { itemId: "SUP003", name: "Alcohol 70% 450 ml", category: "เวชภัณฑ์", unit: "ขวด", stock: 52, minStock: 40, expiryDate: "2027-03-18", lotNumber: "ALC-2601", unitPrice: 38 },
-            { itemId: "MAT001", name: "สำลีปลอดเชื้อ", category: "วัสดุการแพทย์", unit: "ห่อ", stock: 66, minStock: 50, expiryDate: "2028-06-15", lotNumber: "COT-2601", unitPrice: 25 },
-            { itemId: "MAT002", name: "แผ่นตรวจน้ำตาล", category: "วัสดุการแพทย์", unit: "แผ่น", stock: 190, minStock: 120, expiryDate: "2026-11-05", lotNumber: "GLU-2601", unitPrice: 7.5 }
-          ],
-          requests: [
-            {
-              requestId: "REQ-" + todayIso().replaceAll("-", "") + "-001",
-              requestDate: todayIso(),
-              requesterUsername: "staff",
-              requesterName: "เจ้าหน้าที่ รพ.สต.",
-              department: "งานรักษาพยาบาล",
-              status: "รออนุมัติ",
-              reason: "ใช้ในคลินิก",
-              note: "",
-              approvedBy: "",
-              approvedAt: "",
-              rejectedReason: "",
-              dispensedBy: "",
-              dispensedAt: "",
-              createdAt: nowText(),
-              updatedAt: nowText(),
-              items: [
-                { itemId: "MED001", itemName: "Paracetamol 500 mg", category: "ยา", unit: "เม็ด", quantity: 120, dispensedQuantity: 0 },
-                { itemId: "SUP001", itemName: "หน้ากากอนามัย", category: "เวชภัณฑ์", unit: "ชิ้น", quantity: 100, dispensedQuantity: 0 }
-              ]
-            },
-            {
-              requestId: "REQ-20260920-001",
-              requestDate: "2026-09-20",
-              requesterUsername: "staff",
-              requesterName: "เจ้าหน้าที่ รพ.สต.",
-              department: "งานส่งเสริมสุขภาพ",
-              status: "จ่ายแล้ว",
-              reason: "เยี่ยมบ้าน",
-              note: "",
-              approvedBy: "ผอ.รพ.สต.",
-              approvedAt: "20 ก.ย. 2569 09:15",
-              rejectedReason: "",
-              dispensedBy: "เจ้าหน้าที่คลังยา",
-              dispensedAt: "20 ก.ย. 2569 10:05",
-              createdAt: "20 ก.ย. 2569 08:55",
-              updatedAt: "20 ก.ย. 2569 10:05",
-              items: [
-                { itemId: "MED003", itemName: "ORS", category: "ยา", unit: "ซอง", quantity: 60, dispensedQuantity: 60 },
-                { itemId: "SUP002", itemName: "ถุงมือ Disposable", category: "เวชภัณฑ์", unit: "คู่", quantity: 40, dispensedQuantity: 40 }
-              ]
-            }
-          ],
-          imports: [],
-          audit: [],
-          movements: []
-        };
-      }
-
-      function loadLocalState() {
-        try {
-          const raw = localStorage.getItem(LOCAL_KEY);
-          if (!raw) return seedState();
-          return normalizeState(JSON.parse(raw));
-        } catch (error) {
-          return seedState();
-        }
-      }
-
-      function normalizeState(nextState) {
-        const base = seedState();
-        const users = Array.isArray(nextState.users) ? nextState.users.map(user => {
-          const sample = base.users.find(item => item.username === user.username);
-          return { ...user, password: user.password || sample?.password || "" };
-        }) : base.users;
-        return {
-          users,
-          inventory: Array.isArray(nextState.inventory) ? nextState.inventory : base.inventory,
-          requests: Array.isArray(nextState.requests) ? nextState.requests.map(normalizeRequest) : base.requests,
-          imports: Array.isArray(nextState.imports) ? nextState.imports : [],
-          audit: Array.isArray(nextState.audit) ? nextState.audit : [],
-          movements: Array.isArray(nextState.movements) ? nextState.movements : []
-        };
-      }
-
-      function normalizeRequest(request) {
-        return {
-          requestId: request.requestId || request.id || makeRequestId(),
-          requestDate: request.requestDate || request.date || todayIso(),
-          requesterUsername: request.requesterUsername || request.username || "",
-          requesterName: request.requesterName || request.requester || "",
-          department: request.department || "",
-          status: request.status || "รออนุมัติ",
-          reason: request.reason || "",
-          note: request.note || "",
-          approvedBy: request.approvedBy || "",
-          approvedAt: request.approvedAt || "",
-          rejectedReason: request.rejectedReason || "",
-          dispensedBy: request.dispensedBy || "",
-          dispensedAt: request.dispensedAt || "",
-          createdAt: request.createdAt || nowText(),
-          updatedAt: request.updatedAt || nowText(),
-          items: Array.isArray(request.items) ? request.items : []
-        };
-      }
-
-      function saveLocalState() {
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-      }
-
-      function gasUrl() {
-        return DEFAULT_GAS_URL;
-      }
-
-      function setGasUrl(url) {
-        localStorage.setItem(GAS_URL_KEY, (url || DEFAULT_GAS_URL).trim());
-      }
-
-      async function callApi(action, data = {}) {
-        const url = gasUrl();
-        if (!url) throw new Error("ยังไม่ได้ตั้งค่า URL ระบบ");
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 6000);
-        let text = "";
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action, data }),
-            signal: controller.signal
-          });
-          text = await response.text();
-        } catch (error) {
-          if (error.name === "AbortError") {
-            throw new Error("เชื่อมต่อ GAS ไม่สำเร็จภายในเวลา");
-          }
-          throw error;
-        } finally {
-          window.clearTimeout(timeout);
-        }
-        let payload;
-        try {
-          payload = JSON.parse(text);
-        } catch (error) {
-          throw new Error("GAS ส่งข้อมูลกลับมาไม่ใช่ JSON");
-        }
-        if (!payload.ok) {
-          throw new Error(payload.error || "เกิดข้อผิดพลาดจาก GAS");
-        }
-        return payload.data || {};
-      }
-
-      function init() {
-        setGasUrl(DEFAULT_GAS_URL);
-        $("#loginStockCount").textContent = state.inventory.length.toLocaleString("th-TH");
-        renderQuickUsers();
-        $("#loginForm").addEventListener("submit", handleLogin);
-        $("#logoutBtn").addEventListener("click", logout);
-        $("#refreshBtn").addEventListener("click", refreshData);
-        $("#hospitalImportInput").addEventListener("change", handleHospitalImportChange);
-        $("#mobileMenuBtn").addEventListener("click", () => $("#sidebar").classList.toggle("open"));
-        document.addEventListener("click", handleDocumentClick);
-      }
-
-      function renderQuickUsers() {
-        const users = seedState().users;
-        $("#loginUsers").innerHTML = users.map(user => `<option value="${escapeHtml(user.username)}">${escapeHtml(user.name)}</option>`).join("");
-        $("#quickUsers").innerHTML = users.map(user => `
-          <button type="button" data-login-user="${escapeHtml(user.username)}">${escapeHtml(roleNames[user.role] || user.role)}</button>
-        `).join("");
-      }
-
-      async function handleLogin(event) {
-        event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        const username = String(form.get("username") || "").trim();
-        const password = String(form.get("password") || "").trim();
-        setGasUrl(DEFAULT_GAS_URL);
-        if (!username || !password) return toast("กรุณากรอกชื่อผู้ใช้และรหัสผ่าน", "error");
-
-        if (gasUrl()) {
-          try {
-            const data = await callApi("login", { username, password });
-            state = normalizeState(data.state || data);
-            session = { user: data.user, remote: true };
-            saveLocalState();
-            enterApp();
-            toast("เชื่อมต่อ Google Sheets สำเร็จ");
-            return;
-          } catch (error) {
-            toast(error.message + " จะลองตรวจสอบบัญชีในเครื่อง", "warn");
-          }
-        }
-
-        const user = state.users.find(item => item.username === username && item.password === password && item.active !== false);
-        if (!user) {
-          toast("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", "error");
-          return;
-        }
-        session = { user: publicUser(user), remote: false };
-        enterApp();
-      }
-
-      function enterApp() {
-        const allowed = allowedTabs();
-        activeTab = allowed.some(tab => tab.id === activeTab) ? activeTab : allowed[0].id;
-        $("#loginView").hidden = true;
-        $("#appView").hidden = false;
-        renderApp();
-      }
-
-      function logout() {
-        session = null;
-        $("#appView").hidden = true;
-        $("#loginView").hidden = false;
-        $("#loginPassword").value = "";
-        $("#sidebar").classList.remove("open");
-      }
-
-      async function refreshData() {
-        if (!session) return;
-        if (!gasUrl()) {
-          toast("ข้อมูล standalone เป็นข้อมูลล่าสุดในเครื่องแล้ว");
-          renderApp();
-          return;
-        }
-        try {
-          const data = await callApi("bootstrap", {});
-          state = normalizeState(data.state || data);
-          saveLocalState();
-          renderApp();
-          toast("รีเฟรชข้อมูลจาก Google Sheets แล้ว");
-        } catch (error) {
-          toast(error.message, "error");
-        }
-      }
-
-      function allowedTabs() {
-        if (!session) return [];
-        return tabs.filter(tab => tab.roles.includes(session.user.role));
-      }
-
-      function renderApp() {
-        renderNav();
-        renderTopbar();
-        const currentTab = tabs.find(tab => tab.id === activeTab) || tabs[0];
-        $("#pageKicker").textContent = currentTab.label;
-        $("#pageTitle").textContent = currentTab.title;
-
-        const renderers = {
-          dashboard: renderDashboard,
-          request: renderRequestForm,
-          requests: renderRequests,
-          approve: renderApproval,
-          dispense: renderDispense,
-          inventory: renderInventory,
-          reports: renderReports,
-          settings: renderSettings
-        };
-        (renderers[activeTab] || renderDashboard)();
-      }
-
-      function renderNav() {
-        $("#navList").innerHTML = allowedTabs().map(tab => `
-          <button class="nav-btn ${tab.id === activeTab ? "active" : ""}" type="button" data-tab="${tab.id}">
-            <span class="nav-icon">${escapeHtml(tab.icon)}</span>
-            <span>${escapeHtml(tab.label)}</span>
-          </button>
-        `).join("");
-        $("#sidebarUser").textContent = session.user.name || session.user.username;
-        $("#sidebarRole").textContent = roleNames[session.user.role] || session.user.role;
-      }
-
-      function renderTopbar() {
-        const connected = Boolean(gasUrl() && session.remote);
-        $("#connectionPill").innerHTML = `<span class="dot ${connected ? "online" : ""}"></span><span>${connected ? "Google Sheets" : "Standalone"}</span>`;
-        $("#userPill").textContent = `${session.user.name} - ${roleNames[session.user.role] || session.user.role}`;
-      }
-
-      function setContent(html) {
-        $("#content").innerHTML = html;
-        $("#sidebar").classList.remove("open");
-      }
-
-      function computeDashboard() {
-        const today = todayIso();
-        const paid = state.requests.filter(request => request.status === "จ่ายแล้ว");
-        const lowStock = state.inventory.filter(item => Number(item.stock) <= Number(item.minStock || 0));
-        const nearExpiry = state.inventory.filter(item => daysTo(item.expiryDate) <= 180 && daysTo(item.expiryDate) >= 0);
-        const stockValue = state.inventory.reduce((sum, item) => sum + Number(item.stock || 0) * Number(item.unitPrice || 0), 0);
-        return {
-          todayRequests: state.requests.filter(request => request.requestDate === today).length,
-          pending: state.requests.filter(request => request.status === "รออนุมัติ").length,
-          paid: paid.length,
-          lowStock,
-          nearExpiry,
-          stockValue,
-          monthly: monthlySeries(paid),
-          topItems: topItems(paid)
-        };
-      }
-
-      function renderDashboard() {
-        const data = computeDashboard();
-        const maxMonth = Math.max(...data.monthly.map(item => item.count), 1);
-        const maxTop = Math.max(...data.topItems.map(item => item.qty), 1);
-        setContent(`
-          <section class="dashboard-hero">
+      <section id="dental" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Dental</p><h2>งานทันตกรรม</h2></div>
+          <div class="date-filter" data-kind="dental"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="dentalGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้รับบริการทันตกรรมตามช่วงวันที่</h3>
+            <span id="dentalCount" class="soft-label">-</span>
+          </div>
+          <div id="dentalTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
             <div>
-              <h2>ศูนย์ควบคุมการเบิกจ่ายยาและเวชภัณฑ์ รพ.สต.บ้านทับสอ</h2>
-              <p>ติดตามคำขอเบิก อนุมัติ จ่ายยา ตัดสต็อก แจ้งเตือนรายการใกล้หมด และดูมูลค่าคงคลังได้จากหน้าจอเดียว พร้อมใช้งานทั้งคลังยา เจ้าหน้าที่ และผู้บริหาร</p>
-              <div class="status-chip-row">
-                <span class="status-chip">รออนุมัติ ${number(data.pending)} รายการ</span>
-                <span class="status-chip">ใกล้หมด ${number(data.lowStock.length)} รายการ</span>
-                <span class="status-chip">ใกล้หมดอายุ ${number(data.nearExpiry.length)} รายการ</span>
-              </div>
-              <div class="hero-actions">
-                <button class="btn" type="button" data-tab="request">สร้างคำขอเบิก</button>
-                <button class="btn secondary" type="button" data-tab="inventory">ตรวจคลังยา</button>
-                <button class="btn secondary" type="button" data-tab="reports">เปิดรายงาน</button>
-              </div>
+              <h3>จัดรายชื่อทาฟลูออไรด์วานิช 25-59 ปี</h3>
+              <span class="soft-label">ไม่รวมชื่อที่มี “(ตาย)” · preview รายชื่อเท่านั้น ยังไม่เขียนข้อมูลลงฐาน</span>
             </div>
-            <div class="hero-status">
-              <div>
-                <span>มูลค่าสต็อกคงเหลือ</span>
-                <strong>${money(data.stockValue)}</strong>
-                <span>บาท</span>
-              </div>
-              <div>
-                <span>ข้อมูลล่าสุด</span>
-                <strong style="font-size:20px;">${escapeHtml(nowText())}</strong>
-              </div>
+            <span id="fluoridePlanCount" class="soft-label">ยังไม่ได้จัดรายชื่อ</span>
+          </div>
+          <div class="planning-controls">
+            <label>วันที่ให้บริการ
+              <textarea id="fluorideDates" rows="3" placeholder="2026-09-29&#10;2026-10-02"></textarea>
+            </label>
+            <label>จำนวนต่อวัน
+              <input id="fluoridePerDay" type="number" min="1" max="200" value="50">
+            </label>
+            <button id="fluoridePlanBtn" class="primary-btn" type="button">จัดรายชื่อ</button>
+          </div>
+          <div id="fluoridePlanSummary" class="plan-summary"></div>
+          <div id="fluoridePlanTable"></div>
+        </div>
+      </section>
+
+      <section id="thai-med" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Thai Traditional Medicine</p><h2>แพทย์แผนไทย</h2></div>
+          <div class="date-filter" data-kind="thai"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button><button id="exportThaiClaimCsvBtn" class="secondary-btn" type="button">ส่งเคลม 13 Plus</button><button id="syncThaiJhcisBtn" class="secondary-btn" type="button">ซิงก์สถานะ JHCIS</button><a class="ghost-link" href="/manual/thai-herbal.pdf" target="_blank" rel="noopener">เปิดรายการยาสมุนไพร</a></div>
+        </div>
+        <div id="thaiMedGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายงานเข้าเกณฑ์ส่งข้อมูลแผนไทย/ยาสมุนไพร</h3>
+            <span id="thaiClaimCount" class="soft-label">-</span>
+          </div>
+          <div id="thaiClaimTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้รับบริการแพทย์แผนไทยตามช่วงวันที่</h3>
+            <span id="thaiMedCount" class="soft-label">-</span>
+          </div>
+          <div id="thaiMedTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายงานการจ่ายยาสมุนไพรตามช่วงวันที่</h3>
+            <span id="thaiHerbCount" class="soft-label">-</span>
+          </div>
+          <div id="thaiHerbTable"></div>
+        </div>
+      </section>
+
+      <section id="epi" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">EPI</p><h2>สร้างเสริมภูมิคุ้มกันโรค</h2></div>
+          <div class="date-filter" data-kind="epi"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="epiGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>ผลงานฉีดวัคซีนจริง แยกตามชนิดและช่วงอายุ</h3>
+            <span id="epiAdminSummaryCount" class="soft-label">-</span>
+          </div>
+          <div id="epiAdminSummaryTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อและรายการวัคซีนที่บันทึก</h3>
+            <span id="epiAdminCount" class="soft-label">-</span>
+          </div>
+          <div class="epi-filters">
+            <select id="epiVaccineFilter" aria-label="กรองชนิดวัคซีน"><option value="">วัคซีนทุกชนิด</option></select>
+            <select id="epiAgeFilter" aria-label="กรองช่วงอายุ"><option value="">ทุกช่วงอายุ</option></select>
+          </div>
+          <div id="epiAdminTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>สรุปกลุ่มเป้าหมายวัคซีนตามช่วงอายุ</h3>
+            <span id="epiScheduleCount" class="soft-label">-</span>
+          </div>
+          <div id="epiScheduleTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อกลุ่มเป้าหมาย EPI ครบกำหนดและค้างไม่เกิน 1 ปี</h3>
+            <span id="epiTargetCount" class="soft-label">-</span>
+          </div>
+          <div id="epiTargetTable"></div>
+        </div>
+      </section>
+
+      <section id="rights" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Rights</p><h2>ตรวจสอบสิทธิ์</h2></div>
+          <div class="date-filter" data-kind="rights"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="rightsGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้มารับบริการและสถานะเลขออเทน</h3>
+            <span id="rightsRecipientCount" class="soft-label">-</span>
+          </div>
+          <div id="rightsRecipientTable"></div>
+        </div>
+      </section>
+
+      <section id="development" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Child Development</p><h2>พัฒนาการเด็ก</h2></div>
+          <div class="date-filter" data-kind="development"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="developmentGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>สรุปกลุ่มเป้าหมายตรวจพัฒนาการตามช่วงอายุ</h3>
+            <span id="developmentScheduleCount" class="soft-label">-</span>
+          </div>
+          <div id="developmentScheduleTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อกลุ่มเป้าหมายและผลตรวจพัฒนาการ</h3>
+            <span id="developmentTargetCount" class="soft-label">-</span>
+          </div>
+          <div id="developmentTargetTable"></div>
+        </div>
+      </section>
+
+      <section id="finance" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">NHSO Claims</p><h2>การส่งเคลม สปสช.</h2></div>
+          <div class="date-filter" data-kind="finance"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button><button id="exportClaimCsvBtn" class="secondary-btn" type="button">ส่งเคลม 13 Plus</button><button id="syncFinanceJhcisBtn" class="secondary-btn" type="button">ซิงก์สถานะ JHCIS</button><a class="ghost-link" href="/manual/pp70.pdf" target="_blank" rel="noopener">เปิดคู่มือ PP70</a></div>
+        </div>
+        <div class="insight-layout">
+          <div id="financeGrid" class="metric-grid"></div>
+          <div class="surface">
+            <div class="surface-head"><h3>กิจกรรม PP ที่เกี่ยวข้อง</h3></div>
+            <div id="ppRulesList" class="rule-list"></div>
+          </div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>เกณฑ์ PP70 ที่พบในช่วงวันที่เลือก</h3>
+            <span id="claimCriteriaCount" class="soft-label">-</span>
+          </div>
+          <div id="claimCriteriaList" class="claim-criteria-grid"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>จำนวนผู้ป่วยที่เข้าเกณฑ์ส่งเคลมรายวัน</h3>
+            <span id="claimDailyCount" class="soft-label">-</span>
+          </div>
+          <div id="claimDailyTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้รับบริการที่เข้าเกณฑ์ส่งเคลม</h3>
+            <span id="claimRecipientCount" class="soft-label">-</span>
+          </div>
+          <div id="claimRecipientTable"></div>
+        </div>
+      </section>
+
+      <section id="screenings" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Screenings</p><h2>งานคัดกรอง</h2></div>
+          <div class="date-filter" data-kind="screenings"><input type="date" name="start"><input type="date" name="end"><button class="secondary-btn run-report">แสดงรายงาน</button></div>
+        </div>
+        <div id="screeningGrid" class="metric-grid"></div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>สรุปงานคัดกรองตามช่วงวันที่เลือก</h3>
+            <span id="screeningSummaryCount" class="soft-label">-</span>
+          </div>
+          <div id="screeningSummaryTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายชื่อกลุ่มเป้าหมายงานคัดกรอง</h3>
+            <span id="screeningTargetCount" class="soft-label">-</span>
+          </div>
+          <div id="screeningTargetTable"></div>
+        </div>
+      </section>
+
+      <section id="quality" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Data Quality</p><h2>ข้อมูลที่บันทึกไม่สมบูรณ์</h2></div>
+          <div class="date-filter" data-kind="quality">
+            <input type="date" name="start">
+            <input type="date" name="end">
+            <button class="secondary-btn run-report">ค้นหา</button>
+            <button id="previewAutoFixBtn" class="secondary-btn" type="button">ตรวจรายการแก้อัตโนมัติ</button>
+            <button id="confirmAutoFixBtn" class="danger-btn" type="button" disabled>ยืนยันแก้อัตโนมัติ</button>
+          </div>
+        </div>
+        <div class="surface">
+          <div class="surface-head">
+            <h3>รายชื่อผู้รับบริการและรายการข้อมูลไม่สมบูรณ์</h3>
+            <span id="autoFixStatus" class="soft-label">แก้อัตโนมัติจะทำเฉพาะรายการที่ปลอดภัยเท่านั้น</span>
+          </div>
+          <div id="incompleteTable"></div>
+        </div>
+        <div class="surface report-surface">
+          <div class="surface-head">
+            <h3>รายการที่ระบบเสนอให้แก้อัตโนมัติ</h3>
+            <span id="autoFixPreviewCount" class="soft-label">ยังไม่ได้ตรวจ</span>
+          </div>
+          <div id="autoFixPreviewTable"></div>
+        </div>
+      </section>
+
+      <section id="ai" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Executive AI</p><h2>บทสรุปสำหรับผู้บริหาร</h2></div>
+          <div class="button-row">
+            <button id="executivePreviewBtn" class="secondary-btn" type="button">แสดงรายงาน</button>
+            <button id="aiSummaryBtn" class="secondary-btn" type="button">วิเคราะห์ด้วย Local AI</button>
+            <button id="executiveDocxBtn" class="primary-btn" type="button">ส่งออก DOCX</button>
+          </div>
+        </div>
+        <div class="surface">
+          <div class="surface-head"><h3>รายงาน 11 หัวข้อจาก JHCIS</h3><span id="executiveReportMeta" class="soft-label">ยังไม่ได้แสดงรายงาน</span></div>
+          <div id="executiveChapterTable"></div>
+        </div>
+        <div class="ai-surface">
+          <div class="surface-head"><h3>บทวิเคราะห์</h3><span id="aiSourceBadge" class="soft-label">Local AI ยังไม่ทำงาน</span></div>
+          <p id="aiSummary">กดวิเคราะห์เพื่ออ่านข้อเสนอจากข้อมูลสรุป</p>
+        </div>
+      </section>
+
+      <section id="connection" class="section">
+        <div class="section-head">
+          <div><p class="eyebrow">Connection</p><h2>เชื่อมต่อฐานข้อมูล</h2></div>
+        </div>
+        <div class="two-col">
+          <form id="configForm" class="surface form-grid">
+            <h3>ฐานข้อมูล JHCIS</h3>
+            <label>Server <input name="dbHost" autocomplete="off"></label>
+            <label>Port <input name="dbPort" inputmode="numeric"></label>
+            <label>Database <input name="dbName" autocomplete="off"></label>
+            <label>Username <input name="dbUser" autocomplete="off"></label>
+            <label>Password <input name="dbPassword" type="password" autocomplete="new-password" placeholder="เว้นว่างถ้าไม่เปลี่ยน"></label>
+            <label>PCUCODE <input name="pcucode"></label>
+            <h3>สปสช.</h3>
+            <label>URL ขอเลขออเทน EP <input name="closeRightUrl" placeholder="API URL สำหรับปิดสิทธิ์"></label>
+            <label>Token ขอเลขออเทน EP <input name="closeRightToken" type="password" autocomplete="new-password" placeholder="เว้นว่างถ้าไม่เปลี่ยน"></label>
+            <label>URL ส่งเคลม <input name="claimUrl" placeholder="https://nhsoapi.nhso.go.th/stddataset/api/v2/create-std-data"></label>
+            <label>Token ส่งเคลม <input name="claimToken" type="password" autocomplete="new-password" placeholder="เว้นว่างถ้าไม่เปลี่ยน"></label>
+            <h3>AI</h3>
+            <label>Local AI URL <input name="aiBase" placeholder="http://127.0.0.1:11434/v1/chat/completions"></label>
+            <label>Local AI Model <input name="aiModel"></label>
+            <label>Local AI Key <input name="aiKey" type="password" placeholder="เว้นว่างถ้าไม่ใช้"></label>
+            <label class="switch-row"><input name="aiEnabled" type="checkbox"> เปิด Local AI</label>
+            <label class="switch-row"><input name="directEdits" type="checkbox"> เปิดแก้ไขฐานข้อมูลโดยตรง</label>
+            <div class="button-row">
+              <button type="submit" class="primary-btn">บันทึก</button>
+              <button type="button" id="testDbBtn" class="secondary-btn">ทดสอบฐานข้อมูล</button>
+              <button type="button" id="setupTablesBtn" class="secondary-btn">สร้างตารางเสริม</button>
             </div>
-          </section>
-
-          <div class="quick-action-grid">
-            <button class="quick-action" type="button" data-tab="requests">
-              <strong>ติดตามคำขอเบิก</strong>
-              <span>ค้นหา กรองสถานะ และพิมพ์ใบเบิก</span>
-            </button>
-            <button class="quick-action" type="button" data-tab="approve">
-              <strong>อนุมัติออนไลน์</strong>
-              <span>ตรวจคำขอที่รออนุมัติแบบทันที</span>
-            </button>
-            <button class="quick-action" type="button" data-tab="dispense">
-              <strong>จ่ายยา/ตัดสต็อก</strong>
-              <span>ตรวจยอดคงเหลือก่อนจ่ายจริง</span>
-            </button>
-            <button class="quick-action" type="button" data-tab="reports">
-              <strong>รายงานผู้บริหาร</strong>
-              <span>สรุปยอดเบิกจ่ายและคงคลัง</span>
-            </button>
-          </div>
-
-          <div class="metric-grid">
-            ${metricCard("คำขอวันนี้", data.todayRequests, "รายการ", "teal")}
-            ${metricCard("รออนุมัติ", data.pending, "รายการ", "amber")}
-            ${metricCard("จ่ายแล้ว", data.paid, "รายการ", "emerald")}
-            ${metricCard("ใกล้หมด", data.lowStock.length, "รายการ", "rose")}
-            ${metricCard("ใกล้หมดอายุ", data.nearExpiry.length, "รายการ", "violet")}
-            ${metricCard("มูลค่าสต็อก", money(data.stockValue), "บาท", "sky")}
-          </div>
-
-          <div class="split-summary">
-            <section class="panel">
-              <h2>กราฟการเบิกจ่ายรายเดือน</h2>
-              <div class="chart">
-                ${data.monthly.map(item => `
-                  <div class="bar">
-                    <div class="bar-fill" style="height:${Math.max(8, (item.count / maxMonth) * 210)}px"></div>
-                    <strong>${item.count}</strong>
-                    <span>${escapeHtml(item.label)}</span>
-                  </div>
-                `).join("")}
-              </div>
-            </section>
-            <section class="panel">
-              <h2>Top 10 รายการที่เบิกบ่อย</h2>
-              ${data.topItems.length ? `
-                <ol class="rank-list">
-                  ${data.topItems.map(item => `
-                    <li class="rank-row">
-                      <span>${escapeHtml(item.name)}</span>
-                      <span class="rank-track"><span class="rank-fill" style="width:${Math.max(6, (item.qty / maxTop) * 100)}%"></span></span>
-                      <strong>${number(item.qty)}</strong>
-                    </li>
-                  `).join("")}
-                </ol>
-              ` : empty("ยังไม่มีข้อมูลรายการที่จ่ายแล้ว")}
-            </section>
-          </div>
-
-          <div class="alert-grid">
-            <section class="alert-box">
-              <h2>ยา/เวชภัณฑ์ใกล้หมด</h2>
-              ${renderAlertList(data.lowStock, item => `${item.name}`, item => `${number(item.stock)} ${item.unit}`)}
-            </section>
-            <section class="alert-box">
-              <h2>ยาใกล้หมดอายุ</h2>
-              ${renderAlertList(data.nearExpiry, item => `${item.name}`, item => `${formatDate(item.expiryDate)}`)}
-            </section>
-          </div>
-        `);
-      }
-
-      function renderRequestForm() {
-        const requester = session.user;
-        setContent(`
-          <form id="requestForm" class="grid">
-            <section class="panel">
-              <h2>ข้อมูลใบเบิก</h2>
-              <div class="grid three">
-                <div class="field">
-                  <label>เลขที่ใบเบิก</label>
-                  <input value="ระบบสร้างอัตโนมัติ" disabled>
-                </div>
-                <div class="field">
-                  <label>วันที่ขอเบิก</label>
-                  <input value="${formatDate(todayIso())}" disabled>
-                </div>
-                <div class="field">
-                  <label>ชื่อผู้ขอเบิก</label>
-                  <input value="${escapeAttr(requester.name)}" disabled>
-                </div>
-                <div class="field">
-                  <label for="requestDepartment">หน่วยงาน/ฝ่าย</label>
-                  <input id="requestDepartment" name="department" value="${escapeAttr(requester.department || "")}" required>
-                </div>
-                <div class="field">
-                  <label for="requestReason">เหตุผลการเบิก</label>
-                  <select id="requestReason" name="reason" required>
-                    <option value="ใช้ในคลินิก">ใช้ในคลินิก</option>
-                    <option value="เยี่ยมบ้าน">เยี่ยมบ้าน</option>
-                    <option value="งานรณรงค์">งานรณรงค์</option>
-                    <option value="เติมคลังย่อย">เติมคลังย่อย</option>
-                    <option value="อื่นๆ">อื่นๆ</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label for="requestNote">หมายเหตุ</label>
-                  <input id="requestNote" name="note" placeholder="ระบุเพิ่มเติมได้">
-                </div>
-              </div>
-            </section>
-
-            <section class="panel">
-              <div class="toolbar">
-                <h2>รายการที่ขอเบิก</h2>
-                <button id="addLineBtn" class="btn secondary" type="button">เพิ่มรายการ</button>
-              </div>
-              <div id="requestLines" class="request-lines"></div>
-              <div class="toolbar">
-                <span class="hint" id="requestTotalText"></span>
-                <button class="btn" type="submit">ส่งคำขออนุมัติ</button>
-              </div>
-            </section>
           </form>
-        `);
-        addRequestLine();
-        $("#addLineBtn").addEventListener("click", addRequestLine);
-        $("#requestForm").addEventListener("submit", submitRequest);
-      }
-
-      function addRequestLine(selectedId = "", qty = 1) {
-        const wrap = $("#requestLines");
-        if (!wrap) return;
-        const line = document.createElement("div");
-        line.className = "request-line";
-        line.innerHTML = `
-          <div class="field">
-            <label>ชื่อรายการ</label>
-            <select class="line-item" required>
-              <option value="">เลือกรายการ</option>
-              ${state.inventory.map(item => `<option value="${escapeAttr(item.itemId)}" ${item.itemId === selectedId ? "selected" : ""}>${escapeHtml(item.itemId)} - ${escapeHtml(item.name)}</option>`).join("")}
-            </select>
-            <div class="line-stock"></div>
+          <div class="surface">
+            <h3>ตรวจสอบฐานข้อมูล</h3>
+            <textarea id="sqlBox" rows="7">SHOW TABLES</textarea>
+            <div class="button-row">
+              <button id="runQueryBtn" class="primary-btn">Run</button>
+              <button id="discoverSchemaBtn" class="secondary-btn">อ่าน Schema</button>
+            </div>
+            <pre id="queryResult" class="result-box tall"></pre>
           </div>
-          <div class="field">
-            <label>จำนวน</label>
-            <input class="line-qty" type="number" min="1" step="1" value="${Number(qty) || 1}" required>
-          </div>
-          <div class="field">
-            <label>หน่วยนับ</label>
-            <input class="line-unit" disabled>
-          </div>
-          <button class="btn ghost icon-only remove-line" type="button" title="ลบรายการ">x</button>
-        `;
-        wrap.appendChild(line);
-        line.querySelector(".line-item").addEventListener("change", updateRequestLines);
-        line.querySelector(".line-qty").addEventListener("input", updateRequestLines);
-        line.querySelector(".remove-line").addEventListener("click", () => {
-          if ($$(".request-line").length > 1) {
-            line.remove();
-            updateRequestLines();
-          }
-        });
-        updateRequestLines();
-      }
-
-      function updateRequestLines() {
-        let total = 0;
-        $$(".request-line").forEach(line => {
-          const item = findInventory(line.querySelector(".line-item").value);
-          const qty = Number(line.querySelector(".line-qty").value || 0);
-          const unit = line.querySelector(".line-unit");
-          const stock = line.querySelector(".line-stock");
-          if (item) {
-            unit.value = item.unit || "";
-            stock.textContent = `คงเหลือ ${number(item.stock)} ${item.unit} | Lot ${item.lotNumber || "-"}`;
-            stock.style.color = qty > Number(item.stock) ? "var(--red)" : "var(--muted)";
-          } else {
-            unit.value = "";
-            stock.textContent = "";
-          }
-          total += qty;
-        });
-        const text = $("#requestTotalText");
-        if (text) text.textContent = `รวมจำนวนที่ขอเบิก ${number(total)} หน่วย`;
-      }
-
-      async function submitRequest(event) {
-        event.preventDefault();
-        const items = $$(".request-line").map(line => {
-          const item = findInventory(line.querySelector(".line-item").value);
-          const quantity = Number(line.querySelector(".line-qty").value || 0);
-          if (!item || quantity <= 0) return null;
-          return {
-            itemId: item.itemId,
-            itemName: item.name,
-            category: item.category,
-            unit: item.unit,
-            quantity,
-            dispensedQuantity: 0
-          };
-        }).filter(Boolean);
-        if (!items.length) return toast("กรุณาเลือกรายการยา/เวชภัณฑ์อย่างน้อย 1 รายการ", "error");
-        const over = items.find(line => {
-          const item = findInventory(line.itemId);
-          return item && line.quantity > Number(item.stock);
-        });
-        if (over) return toast(`${over.itemName} มีคงเหลือไม่พอ`, "error");
-
-        const payload = {
-          requesterUsername: session.user.username,
-          requesterName: session.user.name,
-          department: $("#requestDepartment").value.trim(),
-          reason: $("#requestReason").value,
-          note: $("#requestNote").value.trim(),
-          items
-        };
-
-        await mutateRemoteOrLocal("createRequest", payload, () => {
-          state.requests.unshift({
-            requestId: makeRequestId(),
-            requestDate: todayIso(),
-            requesterUsername: payload.requesterUsername,
-            requesterName: payload.requesterName,
-            department: payload.department,
-            status: "รออนุมัติ",
-            reason: payload.reason,
-            note: payload.note,
-            approvedBy: "",
-            approvedAt: "",
-            rejectedReason: "",
-            dispensedBy: "",
-            dispensedAt: "",
-            createdAt: nowText(),
-            updatedAt: nowText(),
-            items: payload.items
-          });
-        }, "ส่งคำขอเบิกแล้ว");
-        activeTab = "requests";
-        renderApp();
-      }
-
-      function renderRequests() {
-        const rows = filterRequests();
-        setContent(`
-          ${requestFilters()}
-          <section class="table-panel">
-            <div class="table-header">
-              <h2>รายการคำขอเบิกทั้งหมด</h2>
-              <div class="toolbar-actions">
-                <button class="btn blue" type="button" data-import-hospital>นำเข้าจาก รพ.</button>
-                <button class="btn secondary" type="button" data-export-requests>Export Excel</button>
-                <button class="btn secondary" type="button" data-print-report>PDF/พิมพ์</button>
-              </div>
-            </div>
-            ${renderRequestsTable(rows, true)}
-          </section>
-        `);
-        bindFilters();
-        currentReportRows = rows;
-      }
-
-      function renderApproval() {
-        const rows = state.requests.filter(request => request.status === "รออนุมัติ");
-        setContent(`
-          <section class="table-panel">
-            <div class="table-header">
-              <h2>คำขอรออนุมัติ</h2>
-              <span class="badge pending">${number(rows.length)} รายการ</span>
-            </div>
-            ${rows.length ? renderRequestsTable(rows, true, "approve") : empty("ไม่มีคำขอที่รออนุมัติ")}
-          </section>
-        `);
-      }
-
-      function renderDispense() {
-        const rows = state.requests.filter(request => ["รอจ่าย", "อนุมัติแล้ว"].includes(request.status));
-        setContent(`
-          <section class="table-panel">
-            <div class="table-header">
-              <h2>รายการรอจ่ายยา/เวชภัณฑ์</h2>
-              <span class="badge approved">${number(rows.length)} รายการ</span>
-            </div>
-            ${rows.length ? renderRequestsTable(rows, true, "dispense") : empty("ไม่มีรายการรอจ่าย")}
-          </section>
-        `);
-      }
-
-      function requestFilters() {
-        return `
-          <div class="filters">
-            <div class="field">
-              <label for="filterSearch">ค้นหา</label>
-              <input id="filterSearch" value="${escapeAttr(filterState.search)}" placeholder="เลขที่ใบเบิก/ชื่อผู้ขอ/รายการ">
-            </div>
-            <div class="field">
-              <label for="filterStatus">สถานะ</label>
-              <select id="filterStatus">
-                <option value="" ${filterState.status ? "" : "selected"}>ทั้งหมด</option>
-                ${["รออนุมัติ", "รอจ่าย", "จ่ายแล้ว", "ไม่อนุมัติ", "ยกเลิก"].map(status => `<option value="${status}" ${filterState.status === status ? "selected" : ""}>${status}</option>`).join("")}
-              </select>
-            </div>
-            <div class="field">
-              <label for="filterFrom">ตั้งแต่วันที่</label>
-              <input id="filterFrom" type="date" value="${escapeAttr(filterState.from)}">
-            </div>
-            <div class="field">
-              <label for="filterTo">ถึงวันที่</label>
-              <input id="filterTo" type="date" value="${escapeAttr(filterState.to)}">
-            </div>
-            <div class="field">
-              <label for="filterDepartment">หน่วยงาน</label>
-              <input id="filterDepartment" value="${escapeAttr(filterState.department)}" placeholder="ทุกหน่วยงาน">
-            </div>
-          </div>
-        `;
-      }
-
-      function bindFilters() {
-        const map = {
-          filterSearch: "search",
-          filterStatus: "status",
-          filterFrom: "from",
-          filterTo: "to",
-          filterDepartment: "department"
-        };
-        Object.entries(map).forEach(([id, key]) => {
-          const element = $("#" + id);
-          if (element) {
-            element.addEventListener("input", () => {
-              filterState[key] = element.value;
-              renderApp();
-            });
-          }
-        });
-      }
-
-      function filterRequests() {
-        const query = filterState.search.trim().toLowerCase();
-        const status = filterState.status;
-        const from = filterState.from;
-        const to = filterState.to;
-        const department = filterState.department.trim().toLowerCase();
-        return state.requests.filter(request => {
-          const text = [
-            request.requestId,
-            request.requesterName,
-            request.department,
-            request.reason,
-            request.items.map(item => item.itemName).join(" ")
-          ].join(" ").toLowerCase();
-          return (!query || text.includes(query))
-            && (!status || request.status === status)
-            && (!from || request.requestDate >= from)
-            && (!to || request.requestDate <= to)
-            && (!department || String(request.department || "").toLowerCase().includes(department));
-        });
-      }
-
-      function renderRequestsTable(rows, withActions, mode = "list") {
-        if (!rows.length) return empty("ไม่พบข้อมูลตามเงื่อนไข");
-        return `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>เลขที่ใบเบิก</th>
-                  <th>วันที่</th>
-                  <th>ผู้ขอเบิก</th>
-                  <th>หน่วยงาน</th>
-                  <th>รายการ</th>
-                  <th>เหตุผล</th>
-                  <th>สถานะ</th>
-                  ${withActions ? "<th>ดำเนินการ</th>" : ""}
-                </tr>
-              </thead>
-              <tbody>
-                ${rows.map(request => `
-                  <tr>
-                    <td><strong>${escapeHtml(request.requestId)}</strong></td>
-                    <td>${formatDate(request.requestDate)}</td>
-                    <td>${escapeHtml(request.requesterName)}</td>
-                    <td>${escapeHtml(request.department || "-")}</td>
-                    <td>${request.items.map(item => `${escapeHtml(item.itemName)} <small>(${number(item.quantity)} ${escapeHtml(item.unit)})</small>`).join("<br>")}</td>
-                    <td>${escapeHtml(request.reason || "-")}</td>
-                    <td>${statusBadge(request.status)}</td>
-                    ${withActions ? `<td>${requestActions(request, mode)}</td>` : ""}
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
-      }
-
-      function requestActions(request, mode) {
-        const base = [`<button class="mini-btn" type="button" data-print-request="${escapeAttr(request.requestId)}">พิมพ์</button>`];
-        if (mode === "approve") {
-          base.unshift(`<button class="mini-btn" type="button" data-approve="${escapeAttr(request.requestId)}">อนุมัติ</button>`);
-          base.push(`<button class="mini-btn danger" type="button" data-reject="${escapeAttr(request.requestId)}">ไม่อนุมัติ</button>`);
-        } else if (mode === "dispense") {
-          base.unshift(`<button class="mini-btn" type="button" data-dispense="${escapeAttr(request.requestId)}">จ่ายยา</button>`);
-        } else if (request.status === "รออนุมัติ" && ["staff", "admin"].includes(session.user.role)) {
-          base.push(`<button class="mini-btn danger" type="button" data-cancel="${escapeAttr(request.requestId)}">ยกเลิก</button>`);
-        }
-        return `<div class="cell-actions">${base.join("")}</div>`;
-      }
-
-      async function updateRequestStatus(requestId, status, reason = "") {
-        const payload = { requestId, status, actor: session.user.name, rejectedReason: reason };
-        await mutateRemoteOrLocal("updateRequestStatus", payload, () => {
-          const request = findRequest(requestId);
-          if (!request) return;
-          request.status = status;
-          request.updatedAt = nowText();
-          if (status === "รอจ่าย") {
-            request.approvedBy = session.user.name;
-            request.approvedAt = nowText();
-          }
-          if (status === "ไม่อนุมัติ") {
-            request.rejectedReason = reason || "ไม่อนุมัติ";
-          }
-        }, "อัปเดตสถานะแล้ว");
-        renderApp();
-      }
-
-      async function dispenseRequest(requestId) {
-        const request = findRequest(requestId);
-        if (!request) return;
-        const insufficient = request.items.find(line => {
-          const item = findInventory(line.itemId);
-          return !item || Number(item.stock) < Number(line.quantity);
-        });
-        if (insufficient) {
-          toast(`${insufficient.itemName} คงเหลือไม่พอสำหรับจ่าย`, "error");
-          return;
-        }
-        const payload = { requestId, actor: session.user.name };
-        await mutateRemoteOrLocal("dispenseRequest", payload, () => {
-          request.items.forEach(line => {
-            const item = findInventory(line.itemId);
-            item.stock = Number(item.stock) - Number(line.quantity);
-            line.dispensedQuantity = Number(line.quantity);
-          });
-          request.status = "จ่ายแล้ว";
-          request.dispensedBy = session.user.name;
-          request.dispensedAt = nowText();
-          request.updatedAt = nowText();
-        }, "จ่ายยาและตัดสต็อกแล้ว");
-        renderApp();
-      }
-
-      function renderInventory() {
-        const canEdit = ["pharmacy", "admin"].includes(session.user.role);
-        const lowStock = state.inventory.filter(item => Number(item.stock) <= Number(item.minStock || 0));
-        const nearExpiry = state.inventory.filter(item => daysTo(item.expiryDate) <= 180 && daysTo(item.expiryDate) >= 0);
-        setContent(`
-          <div class="metric-grid">
-            ${metricCard("รายการทั้งหมด", state.inventory.length, "รายการ")}
-            ${metricCard("ใกล้หมด", lowStock.length, "รายการ")}
-            ${metricCard("ใกล้หมดอายุ", nearExpiry.length, "รายการ")}
-            ${metricCard("มูลค่าคงคลัง", money(stockValue()), "บาท")}
-            ${metricCard("ประเภท", new Set(state.inventory.map(item => item.category)).size, "กลุ่ม")}
-            ${metricCard("Lot", new Set(state.inventory.map(item => item.lotNumber).filter(Boolean)).size, "Lot")}
-          </div>
-          ${canEdit ? inventoryForm() : ""}
-          <section class="table-panel">
-            <div class="table-header">
-              <h2>คลังยาและเวชภัณฑ์</h2>
-              <div class="toolbar-actions">
-                <button class="btn secondary" type="button" data-export-inventory>Export Excel</button>
-                <button class="btn secondary" type="button" data-print-inventory>PDF/พิมพ์</button>
-              </div>
-            </div>
-            ${inventoryTable(canEdit)}
-          </section>
-        `);
-        if (canEdit) {
-          $("#inventoryForm").addEventListener("submit", submitInventory);
-          $("#clearInventoryBtn").addEventListener("click", () => fillInventoryForm(null));
-        }
-      }
-
-      function inventoryForm() {
-        return `
-          <section class="panel">
-            <h2>เพิ่ม/แก้ไขรายการคลัง</h2>
-            <form id="inventoryForm" class="grid four">
-              <input id="inventoryEditingId" type="hidden">
-              <div class="field"><label>รหัส</label><input id="invId" placeholder="ระบบสร้างได้ถ้าเว้นว่าง"></div>
-              <div class="field"><label>ชื่อรายการ</label><input id="invName" required></div>
-              <div class="field">
-                <label>ประเภท</label>
-                <select id="invCategory" required>
-                  <option>ยา</option>
-                  <option>เวชภัณฑ์</option>
-                  <option>วัสดุการแพทย์</option>
-                </select>
-              </div>
-              <div class="field"><label>หน่วยนับ</label><input id="invUnit" required></div>
-              <div class="field"><label>จำนวนคงเหลือ</label><input id="invStock" type="number" min="0" step="1" required></div>
-              <div class="field"><label>จุดแจ้งเตือน</label><input id="invMin" type="number" min="0" step="1" required></div>
-              <div class="field"><label>วันหมดอายุ</label><input id="invExpiry" type="date"></div>
-              <div class="field"><label>Lot Number</label><input id="invLot"></div>
-              <div class="field"><label>ราคาต่อหน่วย</label><input id="invPrice" type="number" min="0" step="0.01"></div>
-              <div class="field">
-                <label>&nbsp;</label>
-                <button class="btn" type="submit">บันทึกรายการ</button>
-              </div>
-              <div class="field">
-                <label>&nbsp;</label>
-                <button id="clearInventoryBtn" class="btn secondary" type="button">ล้างฟอร์ม</button>
-              </div>
-            </form>
-          </section>
-        `;
-      }
-
-      function inventoryTable(canEdit) {
-        if (!state.inventory.length) return empty("ยังไม่มีรายการคลัง");
-        return `
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>รหัส</th>
-                  <th>ชื่อรายการ</th>
-                  <th>ประเภท</th>
-                  <th>คงเหลือ</th>
-                  <th>จุดแจ้งเตือน</th>
-                  <th>หมดอายุ</th>
-                  <th>Lot</th>
-                  <th>ราคา</th>
-                  <th>สถานะ</th>
-                  ${canEdit ? "<th>ดำเนินการ</th>" : ""}
-                </tr>
-              </thead>
-              <tbody>
-                ${state.inventory.map(item => `
-                  <tr>
-                    <td><strong>${escapeHtml(item.itemId)}</strong></td>
-                    <td>${escapeHtml(item.name)}</td>
-                    <td>${escapeHtml(item.category)}</td>
-                    <td>${number(item.stock)} ${escapeHtml(item.unit)}</td>
-                    <td>${number(item.minStock)} ${escapeHtml(item.unit)}</td>
-                    <td>${formatDate(item.expiryDate)}</td>
-                    <td>${escapeHtml(item.lotNumber || "-")}</td>
-                    <td>${money(item.unitPrice)}</td>
-                    <td>${inventoryStatus(item)}</td>
-                    ${canEdit ? `<td><button class="mini-btn" type="button" data-edit-inventory="${escapeAttr(item.itemId)}">แก้ไข</button></td>` : ""}
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </div>
-        `;
-      }
-
-      function fillInventoryForm(item) {
-        $("#inventoryEditingId").value = item?.itemId || "";
-        $("#invId").value = item?.itemId || "";
-        $("#invName").value = item?.name || "";
-        $("#invCategory").value = item?.category || "ยา";
-        $("#invUnit").value = item?.unit || "";
-        $("#invStock").value = item?.stock ?? "";
-        $("#invMin").value = item?.minStock ?? "";
-        $("#invExpiry").value = item?.expiryDate || "";
-        $("#invLot").value = item?.lotNumber || "";
-        $("#invPrice").value = item?.unitPrice ?? "";
-      }
-
-      async function submitInventory(event) {
-        event.preventDefault();
-        const originalId = $("#inventoryEditingId").value.trim();
-        const item = {
-          originalId,
-          itemId: $("#invId").value.trim() || nextItemId($("#invCategory").value),
-          name: $("#invName").value.trim(),
-          category: $("#invCategory").value,
-          unit: $("#invUnit").value.trim(),
-          stock: Number($("#invStock").value || 0),
-          minStock: Number($("#invMin").value || 0),
-          expiryDate: $("#invExpiry").value,
-          lotNumber: $("#invLot").value.trim(),
-          unitPrice: Number($("#invPrice").value || 0)
-        };
-        await mutateRemoteOrLocal("upsertInventory", item, () => {
-          const index = state.inventory.findIndex(row => row.itemId === (originalId || item.itemId));
-          if (index >= 0) state.inventory[index] = item;
-          else state.inventory.push(item);
-        }, "บันทึกรายการคลังแล้ว");
-        renderApp();
-      }
-
-      function renderReports() {
-        const rows = filterRequests();
-        currentReportRows = rows;
-        const paidRows = rows.filter(row => row.status === "จ่ายแล้ว");
-        const qty = paidRows.flatMap(row => row.items).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
-        setContent(`
-          ${requestFilters()}
-          <div class="metric-grid">
-            ${metricCard("คำขอทั้งหมด", rows.length, "รายการ")}
-            ${metricCard("จ่ายแล้ว", paidRows.length, "รายการ")}
-            ${metricCard("จำนวนที่จ่าย", qty, "หน่วย")}
-            ${metricCard("มูลค่าคงคลัง", money(stockValue()), "บาท")}
-            ${metricCard("ใกล้หมด", state.inventory.filter(item => Number(item.stock) <= Number(item.minStock || 0)).length, "รายการ")}
-            ${metricCard("ใกล้หมดอายุ", state.inventory.filter(item => daysTo(item.expiryDate) <= 180 && daysTo(item.expiryDate) >= 0).length, "รายการ")}
-          </div>
-          <section class="table-panel">
-            <div class="table-header">
-              <h2>รายงานการเบิกจ่าย</h2>
-              <div class="toolbar-actions">
-                <button class="btn blue" type="button" data-import-hospital>นำเข้าจาก รพ.</button>
-                <button class="btn secondary" type="button" data-export-report>Export Excel</button>
-                <button class="btn secondary" type="button" data-print-report>PDF/พิมพ์</button>
-              </div>
-            </div>
-            ${renderRequestsTable(rows, false)}
-          </section>
-          ${renderImportsPanel()}
-        `);
-        bindFilters();
-      }
-
-      function renderImportsPanel() {
-        const imports = Array.isArray(state.imports) ? state.imports : [];
-        return `
-          <section class="table-panel" style="margin-top:14px;">
-            <div class="table-header">
-              <h2>ไฟล์นำเข้าข้อมูลการเบิกยาจาก รพ.</h2>
-              <span class="badge approved">${number(imports.length)} ไฟล์</span>
-            </div>
-            ${imports.length ? `
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>วันที่นำเข้า</th>
-                      <th>ชื่อไฟล์</th>
-                      <th>ชนิดไฟล์</th>
-                      <th>ขนาด</th>
-                      <th>ผู้นำเข้า</th>
-                      <th>สถานะ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${imports.map(item => `
-                      <tr>
-                        <td>${escapeHtml(item.date || item.importedAt || "-")}</td>
-                        <td>${escapeHtml(item.fileName || "-")}</td>
-                        <td>${escapeHtml(item.mimeType || item.extension || "-")}</td>
-                        <td>${formatBytes(item.fileSize)}</td>
-                        <td>${escapeHtml(item.uploadedBy || item.actor || "-")}</td>
-                        <td>${statusBadge(item.status || "จ่ายแล้ว").replace("จ่ายแล้ว", escapeHtml(item.status || "นำเข้าแล้ว"))}</td>
-                      </tr>
-                    `).join("")}
-                  </tbody>
-                </table>
-              </div>
-            ` : empty("ยังไม่มีไฟล์นำเข้าจาก รพ.")}
-          </section>
-        `;
-      }
-
-      function renderSettings() {
-        setContent(`
-          <section class="panel">
-            <h2>เพิ่ม/แก้ไขผู้ใช้งาน</h2>
-            <form id="userForm" class="grid four">
-              <input id="userEditing" type="hidden">
-              <div class="field"><label>Username</label><input id="userUsername" required></div>
-              <div class="field"><label>Password</label><input id="userPassword" type="password" placeholder="เว้นว่างถ้าไม่เปลี่ยน"></div>
-              <div class="field"><label>ชื่อ</label><input id="userName" required></div>
-              <div class="field"><label>หน่วยงาน</label><input id="userDepartment"></div>
-              <div class="field">
-                <label>สิทธิ์</label>
-                <select id="userRole">
-                  ${Object.entries(roleNames).map(([value, label]) => `<option value="${value}">${label}</option>`).join("")}
-                </select>
-              </div>
-              <div class="field">
-                <label>สถานะ</label>
-                <select id="userActive">
-                  <option value="true">ใช้งาน</option>
-                  <option value="false">ปิดใช้งาน</option>
-                </select>
-              </div>
-              <div class="field"><label>&nbsp;</label><button class="btn" type="submit">บันทึกผู้ใช้</button></div>
-              <div class="field"><label>&nbsp;</label><button id="clearUserBtn" class="btn secondary" type="button">ล้างฟอร์ม</button></div>
-            </form>
-          </section>
-          <section class="table-panel">
-            <div class="table-header"><h2>ผู้ใช้งานระบบ</h2></div>
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr><th>Username</th><th>ชื่อ</th><th>สิทธิ์</th><th>หน่วยงาน</th><th>สถานะ</th><th>ดำเนินการ</th></tr>
-                </thead>
-                <tbody>
-                  ${state.users.map(user => `
-                    <tr>
-                      <td><strong>${escapeHtml(user.username)}</strong></td>
-                      <td>${escapeHtml(user.name)}</td>
-                      <td>${escapeHtml(roleNames[user.role] || user.role)}</td>
-                      <td>${escapeHtml(user.department || "-")}</td>
-                      <td>${user.active === false ? statusBadge("ยกเลิก") : statusBadge("จ่ายแล้ว").replace("จ่ายแล้ว", "ใช้งาน")}</td>
-                      <td><button class="mini-btn" type="button" data-edit-user="${escapeAttr(user.username)}">แก้ไข</button></td>
-                    </tr>
-                  `).join("")}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        `);
-        $("#userForm").addEventListener("submit", submitUser);
-        $("#clearUserBtn").addEventListener("click", () => fillUserForm(null));
-      }
-
-      function fillUserForm(user) {
-        $("#userEditing").value = user?.username || "";
-        $("#userUsername").value = user?.username || "";
-        $("#userPassword").value = "";
-        $("#userName").value = user?.name || "";
-        $("#userDepartment").value = user?.department || "";
-        $("#userRole").value = user?.role || "staff";
-        $("#userActive").value = String(user?.active !== false);
-      }
-
-      async function submitUser(event) {
-        event.preventDefault();
-        const originalUsername = $("#userEditing").value.trim();
-        const existing = state.users.find(user => user.username === originalUsername);
-        const user = {
-          originalUsername,
-          username: $("#userUsername").value.trim(),
-          password: $("#userPassword").value.trim(),
-          name: $("#userName").value.trim(),
-          role: $("#userRole").value,
-          department: $("#userDepartment").value.trim(),
-          active: $("#userActive").value === "true"
-        };
-        await mutateRemoteOrLocal("upsertUser", user, () => {
-          const localUser = { ...user, password: user.password || existing?.password || "1234" };
-          const index = state.users.findIndex(row => row.username === (originalUsername || user.username));
-          if (index >= 0) state.users[index] = localUser;
-          else state.users.push(localUser);
-        }, "บันทึกผู้ใช้งานแล้ว");
-        renderApp();
-      }
-
-      async function mutateRemoteOrLocal(action, payload, localMutation, successMessage) {
-        if (gasUrl() && session?.remote) {
-          try {
-            const data = await callApi(action, payload);
-            state = normalizeState(data.state || data);
-            saveLocalState();
-            toast(successMessage);
-            return;
-          } catch (error) {
-            toast(error.message + " บันทึกลงข้อมูลในเครื่องแทน", "warn");
-          }
-        }
-        localMutation();
-        saveLocalState();
-        toast(successMessage);
-      }
-
-      function handleDocumentClick(event) {
-        const tabBtn = event.target.closest("[data-tab]");
-        if (tabBtn) {
-          const nextTab = tabBtn.dataset.tab;
-          if (!allowedTabs().some(tab => tab.id === nextTab)) {
-            toast("สิทธิ์ผู้ใช้งานนี้ยังไม่สามารถเปิดเมนูดังกล่าวได้", "warn");
-            return;
-          }
-          activeTab = nextTab;
-          renderApp();
-          return;
-        }
-
-        const quick = event.target.closest("[data-login-user]");
-        if (quick) {
-          $("#loginUsername").value = quick.dataset.loginUser;
-          $("#loginPassword").value = "1234";
-          return;
-        }
-
-        const approve = event.target.closest("[data-approve]");
-        if (approve) return updateRequestStatus(approve.dataset.approve, "รอจ่าย");
-
-        const reject = event.target.closest("[data-reject]");
-        if (reject) {
-          const reason = prompt("เหตุผลที่ไม่อนุมัติ") || "ไม่อนุมัติ";
-          return updateRequestStatus(reject.dataset.reject, "ไม่อนุมัติ", reason);
-        }
-
-        const cancel = event.target.closest("[data-cancel]");
-        if (cancel && confirm("ยืนยันยกเลิกคำขอนี้")) return updateRequestStatus(cancel.dataset.cancel, "ยกเลิก");
-
-        const dispense = event.target.closest("[data-dispense]");
-        if (dispense && confirm("ยืนยันจ่ายยาและตัดสต็อก")) return dispenseRequest(dispense.dataset.dispense);
-
-        const printRequest = event.target.closest("[data-print-request]");
-        if (printRequest) return printRequestSlip(printRequest.dataset.printRequest);
-
-        const editInventory = event.target.closest("[data-edit-inventory]");
-        if (editInventory) return fillInventoryForm(findInventory(editInventory.dataset.editInventory));
-
-        const editUser = event.target.closest("[data-edit-user]");
-        if (editUser) return fillUserForm(state.users.find(user => user.username === editUser.dataset.editUser));
-
-        if (event.target.closest("[data-import-hospital]")) return openHospitalImport();
-        if (event.target.closest("[data-export-requests]")) return exportRequestsCsv(filterRequests(), "requests.csv");
-        if (event.target.closest("[data-export-report]")) return exportRequestsCsv(currentReportRows, "report.csv");
-        if (event.target.closest("[data-export-inventory]")) return exportInventoryCsv();
-        if (event.target.closest("[data-print-report]")) return printReport();
-        if (event.target.closest("[data-print-inventory]")) return printInventory();
-      }
-
-      function openHospitalImport() {
-        const input = $("#hospitalImportInput");
-        input.value = "";
-        input.click();
-      }
-
-      async function handleHospitalImportChange(event) {
-        const files = Array.from(event.target.files || []);
-        if (!files.length) return;
-        for (const file of files) {
-          try {
-            await importHospitalFile(file);
-          } catch (error) {
-            toast(`${file.name}: ${error.message}`, "error");
-          }
-        }
-        renderApp();
-      }
-
-      async function importHospitalFile(file) {
-        const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-        if (!IMPORT_EXTENSIONS.includes(extension)) {
-          throw new Error("รองรับเฉพาะ .pdf, .exe, .csv, .txt, .xls, .xlsx");
-        }
-        if (file.size > MAX_IMPORT_FILE_BYTES) {
-          throw new Error("ไฟล์ใหญ่เกิน 8 MB");
-        }
-
-        const payload = await readImportFile(file, extension);
-        await mutateRemoteOrLocal("importHospitalFile", payload, () => {
-          const importedAt = nowText();
-          state.imports = state.imports || [];
-          state.imports.unshift({
-            importId: "IMP-" + Date.now(),
-            date: importedAt,
-            fileName: payload.fileName,
-            mimeType: payload.mimeType || payload.extension,
-            extension: payload.extension,
-            fileSize: payload.fileSize,
-            uploadedBy: payload.uploadedBy,
-            status: "นำเข้าแล้ว",
-            note: payload.note
-          });
-          state.audit = state.audit || [];
-          state.audit.unshift({
-            logId: "LOG-" + Date.now(),
-            date: importedAt,
-            actor: payload.uploadedBy,
-            action: "IMPORT_HOSPITAL_FILE",
-            detail: payload.fileName,
-            refId: payload.extension
-          });
-        }, `นำเข้าไฟล์ ${file.name} แล้ว`);
-      }
-
-      function readImportFile(file, extension) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onerror = () => reject(new Error("อ่านไฟล์ไม่สำเร็จ"));
-          reader.onload = () => {
-            const result = String(reader.result || "");
-            const base64 = result.includes(",") ? result.split(",").pop() : "";
-            resolve({
-              fileName: file.name,
-              mimeType: file.type || "application/octet-stream",
-              extension,
-              fileSize: file.size,
-              base64,
-              uploadedBy: session?.user?.name || "",
-              uploadedUsername: session?.user?.username || "",
-              note: "นำเข้าข้อมูลการเบิกยาจาก รพ."
-            });
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-
-      function printRequestSlip(requestId) {
-        const request = findRequest(requestId);
-        if (!request) return;
-        const html = `
-          <div class="receipt">
-            <h1>ใบเบิกจ่ายยาและเวชภัณฑ์</h1>
-            <p style="text-align:center;margin:0;">รพ.สต.บ้านทับสอ อบจ.สกลนคร</p>
-            <div class="meta">
-              <div><strong>เลขที่ใบเบิก:</strong> ${escapeHtml(request.requestId)}</div>
-              <div><strong>วันที่:</strong> ${formatDate(request.requestDate)}</div>
-              <div><strong>ผู้ขอเบิก:</strong> ${escapeHtml(request.requesterName)}</div>
-              <div><strong>หน่วยงาน:</strong> ${escapeHtml(request.department || "-")}</div>
-              <div><strong>เหตุผล:</strong> ${escapeHtml(request.reason || "-")}</div>
-              <div><strong>สถานะ:</strong> ${escapeHtml(request.status)}</div>
-            </div>
-            <table>
-              <thead><tr><th>ลำดับ</th><th>รหัส</th><th>รายการ</th><th>ประเภท</th><th>จำนวน</th><th>หน่วย</th></tr></thead>
-              <tbody>
-                ${request.items.map((item, index) => `
-                  <tr>
-                    <td>${index + 1}</td>
-                    <td>${escapeHtml(item.itemId)}</td>
-                    <td>${escapeHtml(item.itemName)}</td>
-                    <td>${escapeHtml(item.category)}</td>
-                    <td>${number(item.quantity)}</td>
-                    <td>${escapeHtml(item.unit)}</td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-            <p><strong>หมายเหตุ:</strong> ${escapeHtml(request.note || "-")}</p>
-            <div class="signature-grid">
-              <div class="signature-line">ผู้ขอเบิก</div>
-              <div class="signature-line">ผู้อนุมัติ</div>
-              <div class="signature-line">ผู้จ่ายยา</div>
-            </div>
-          </div>
-        `;
-        printHtml(html);
-      }
-
-      function printReport() {
-        const rows = currentReportRows.length ? currentReportRows : filterRequests();
-        printHtml(`
-          <div class="receipt">
-            <h1>รายงานการเบิกจ่ายยาและเวชภัณฑ์</h1>
-            <p style="text-align:center;margin:0 0 18px;">พิมพ์เมื่อ ${escapeHtml(nowText())}</p>
-            ${renderRequestsTable(rows, false)}
-          </div>
-        `);
-      }
-
-      function printInventory() {
-        printHtml(`
-          <div class="receipt">
-            <h1>รายงานยอดคงเหลือยาและเวชภัณฑ์</h1>
-            <p style="text-align:center;margin:0 0 18px;">พิมพ์เมื่อ ${escapeHtml(nowText())}</p>
-            ${inventoryTable(false)}
-          </div>
-        `);
-      }
-
-      function printHtml(html) {
-        $("#printArea").innerHTML = html;
-        window.print();
-      }
-
-      function exportRequestsCsv(rows, filename) {
-        const header = ["เลขที่ใบเบิก", "วันที่", "ผู้ขอ", "หน่วยงาน", "สถานะ", "เหตุผล", "รายการ", "จำนวน", "หน่วย"];
-        const lines = rows.flatMap(request => request.items.map(item => [
-          request.requestId,
-          request.requestDate,
-          request.requesterName,
-          request.department,
-          request.status,
-          request.reason,
-          item.itemName,
-          item.quantity,
-          item.unit
-        ]));
-        downloadCsv([header, ...lines], filename);
-      }
-
-      function exportInventoryCsv() {
-        const header = ["รหัส", "ชื่อรายการ", "ประเภท", "หน่วย", "คงเหลือ", "จุดแจ้งเตือน", "วันหมดอายุ", "Lot", "ราคาต่อหน่วย"];
-        const lines = state.inventory.map(item => [
-          item.itemId,
-          item.name,
-          item.category,
-          item.unit,
-          item.stock,
-          item.minStock,
-          item.expiryDate,
-          item.lotNumber,
-          item.unitPrice
-        ]);
-        downloadCsv([header, ...lines], "inventory.csv");
-      }
-
-      function downloadCsv(rows, filename) {
-        const csv = rows.map(row => row.map(value => `"${String(value ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
-        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
-      }
-
-      function metricCard(label, value, suffix, accent) {
-        const accents = ["teal", "sky", "emerald", "amber", "rose", "violet"];
-        const pickedAccent = accent || accents[Math.abs(Array.from(String(label)).reduce((sum, char) => sum + char.charCodeAt(0), 0)) % accents.length];
-        return `
-          <article class="metric-card accent-${pickedAccent}">
-            <span>${escapeHtml(label)}</span>
-            <strong>${typeof value === "number" ? number(value) : escapeHtml(String(value))}</strong>
-            <small>${escapeHtml(suffix || "")}</small>
-          </article>
-        `;
-      }
-
-      function renderAlertList(items, left, right) {
-        if (!items.length) return empty("ไม่มีรายการแจ้งเตือน");
-        return `
-          <ul class="alert-list">
-            ${items.slice(0, 8).map(item => `
-              <li>
-                <span>${escapeHtml(left(item))}</span>
-                <strong>${escapeHtml(right(item))}</strong>
-              </li>
-            `).join("")}
-          </ul>
-        `;
-      }
-
-      function statusBadge(status) {
-        const cls = {
-          "ร่าง": "draft",
-          "รออนุมัติ": "pending",
-          "อนุมัติแล้ว": "approved",
-          "รอจ่าย": "waiting",
-          "จ่ายแล้ว": "paid",
-          "ไม่อนุมัติ": "rejected",
-          "ยกเลิก": "cancelled"
-        }[status] || "draft";
-        return `<span class="badge ${cls}">${escapeHtml(status || "-")}</span>`;
-      }
-
-      function inventoryStatus(item) {
-        if (Number(item.stock) <= Number(item.minStock || 0)) return `<span class="badge low">ใกล้หมด</span>`;
-        if (daysTo(item.expiryDate) <= 180 && daysTo(item.expiryDate) >= 0) return `<span class="badge pending">ใกล้หมดอายุ</span>`;
-        return `<span class="badge paid">ปกติ</span>`;
-      }
-
-      function monthlySeries(requests) {
-        const list = [];
-        const base = new Date();
-        for (let i = 5; i >= 0; i -= 1) {
-          const date = new Date(base.getFullYear(), base.getMonth() - i, 1);
-          const key = date.toISOString().slice(0, 7);
-          const label = date.toLocaleDateString("th-TH", { month: "short" });
-          list.push({ key, label, count: 0 });
-        }
-        requests.forEach(request => {
-          const bucket = list.find(item => item.key === String(request.requestDate || "").slice(0, 7));
-          if (bucket) bucket.count += 1;
-        });
-        return list;
-      }
-
-      function topItems(requests) {
-        const map = new Map();
-        requests.forEach(request => {
-          request.items.forEach(item => {
-            const key = item.itemName || item.itemId;
-            const current = map.get(key) || { name: key, qty: 0 };
-            current.qty += Number(item.quantity || 0);
-            map.set(key, current);
-          });
-        });
-        return Array.from(map.values()).sort((a, b) => b.qty - a.qty).slice(0, 10);
-      }
-
-      function stockValue() {
-        return state.inventory.reduce((sum, item) => sum + Number(item.stock || 0) * Number(item.unitPrice || 0), 0);
-      }
-
-      function makeRequestId() {
-        const date = todayIso().replaceAll("-", "");
-        const count = state.requests.filter(request => String(request.requestId).includes("REQ-" + date)).length + 1;
-        return `REQ-${date}-${String(count).padStart(3, "0")}`;
-      }
-
-      function nextItemId(category) {
-        const prefix = category === "ยา" ? "MED" : category === "เวชภัณฑ์" ? "SUP" : "MAT";
-        const nums = state.inventory
-          .map(item => String(item.itemId || ""))
-          .filter(id => id.startsWith(prefix))
-          .map(id => Number(id.replace(prefix, "")) || 0);
-        return prefix + String(Math.max(0, ...nums) + 1).padStart(3, "0");
-      }
-
-      function findInventory(itemId) {
-        return state.inventory.find(item => item.itemId === itemId);
-      }
-
-      function findRequest(requestId) {
-        return state.requests.find(request => request.requestId === requestId);
-      }
-
-      function publicUser(user) {
-        const clone = { ...user };
-        delete clone.password;
-        return clone;
-      }
-
-      function daysTo(dateText) {
-        if (!dateText) return Number.POSITIVE_INFINITY;
-        const date = new Date(dateText + "T00:00:00");
-        if (Number.isNaN(date.getTime())) return Number.POSITIVE_INFINITY;
-        const today = new Date(todayIso() + "T00:00:00");
-        return Math.ceil((date - today) / 86400000);
-      }
-
-      function formatDate(value) {
-        if (!value) return "-";
-        const date = new Date(String(value).slice(0, 10) + "T00:00:00");
-        if (Number.isNaN(date.getTime())) return escapeHtml(String(value));
-        return date.toLocaleDateString("th-TH", { year: "numeric", month: "short", day: "numeric" });
-      }
-
-      function number(value) {
-        return Number(value || 0).toLocaleString("th-TH");
-      }
-
-      function money(value) {
-        return Number(value || 0).toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      }
-
-      function formatBytes(value) {
-        const bytes = Number(value || 0);
-        if (bytes < 1024) return `${number(bytes)} B`;
-        if (bytes < 1024 * 1024) return `${number((bytes / 1024).toFixed(1))} KB`;
-        return `${number((bytes / 1024 / 1024).toFixed(2))} MB`;
-      }
-
-      function escapeHtml(value) {
-        return String(value ?? "")
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      function escapeAttr(value) {
-        return escapeHtml(value);
-      }
-
-      function empty(text) {
-        return `<div class="empty">${escapeHtml(text)}</div>`;
-      }
-
-      function toast(message, type = "") {
-        const element = document.createElement("div");
-        element.className = "toast-item " + type;
-        element.textContent = message;
-        $("#toast").appendChild(element);
-        window.setTimeout(() => element.remove(), 4200);
-      }
-
-      init();
-    })();
-  </script>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="editDialog" class="edit-dialog">
+    <form method="dialog" id="editForm" class="form-grid">
+      <h3>แก้ไขข้อมูล</h3>
+      <p id="editIssue"></p>
+      <div id="editFields"></div>
+      <div class="button-row">
+        <button value="cancel" class="secondary-btn">ยกเลิก</button>
+        <button id="saveEditBtn" value="default" class="primary-btn">บันทึก</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="loginDialog" class="login-dialog" aria-labelledby="loginTitle">
+    <div class="login-brand">
+      <span class="login-brand-mark" aria-hidden="true">H+</span>
+      <div><strong>แดชบอร์ดอัจฉริยะ รพ.สต.บ้านทับสอ</strong><span>JHCIS · โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านทับสอ</span></div>
+    </div>
+    <form id="loginForm" class="login-form">
+      <p class="eyebrow">Secure Access</p>
+      <h2 id="loginTitle">เข้าสู่ระบบ</h2>
+      <p class="login-description">เข้าสู่ระบบเพื่อดูรายชื่อ รายงาน และจัดการข้อมูล</p>
+      <label>รหัสผู้ใช้
+        <input id="loginUser" name="user" inputmode="numeric" autocomplete="username" required>
+      </label>
+      <label>รหัสผ่าน
+        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p id="loginError" class="login-error" role="alert" hidden></p>
+      <div class="button-row">
+        <button id="cancelLoginBtn" class="secondary-btn" type="button">ยกเลิก</button>
+        <button id="submitLoginBtn" class="primary-btn" type="submit">เข้าสู่ระบบ</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/assets/app.js"></script>
 </body>
 </html>
